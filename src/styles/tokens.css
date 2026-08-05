@@ -1,0 +1,125 @@
+/**
+ * Design tokens. Light values are the default; [data-theme='dark'] inverts the
+ * scale. See docs/theming.md.
+ *
+ * Colour scales are numeric so a component never hardcodes a hex value — every
+ * CSS Module reads `var(--color-*)`. Spacing/radius/typography follow the same
+ * rule.
+ */
+:root {
+  /* ---- colour ---------------------------------------------------------- */
+  --color-primary-0: #ffffff;
+  --color-primary-950: #0a0a0a;
+
+  --color-grey-100: #f7f7f7;
+  --color-grey-200: #e6e6e6;
+  --color-grey-300: #d6d6d6;
+  --color-grey-400: #a5a5a5;
+  --color-grey-500: #767676;
+  --color-grey-600: #575757;
+  --color-grey-700: #434343;
+  --color-grey-800: #292929;
+  --color-grey-900: #1a1a1a;
+  --color-grey-950: #0a0a0a;
+
+  --color-red-50: #fff1f1;
+  --color-red-400: #ff6466;
+  --color-red-500: #ff3a3d;
+  --color-red-950: #4b0405;
+
+  --color-green-50: #f0fdf5;
+  --color-green-400: #4ade87;
+  --color-green-500: #18b359;
+  --color-green-950: #052e18;
+
+  --color-blue-50: #eff9ff;
+  --color-blue-400: #5dc1fd;
+  --color-blue-500: #37a3fa;
+  --color-blue-950: #163055;
+
+  /* ---- semantic aliases ------------------------------------------------ */
+  --color-bg: var(--color-primary-0);
+  --color-bg-subtle: var(--color-grey-100);
+  --color-bg-raised: var(--color-primary-0);
+  --color-border: var(--color-grey-300);
+  --color-border-strong: var(--color-grey-400);
+  --color-text: var(--color-grey-950);
+  --color-text-muted: var(--color-grey-500);
+  --color-text-inverted: var(--color-primary-0);
+  --color-accent: var(--color-blue-500);
+  --color-danger: var(--color-red-500);
+  --color-success: var(--color-green-500);
+  --color-overlay: rgb(10 10 10 / 45%);
+
+  /* ---- spacing --------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+
+  /* ---- radius, elevation, motion --------------------------------------- */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px rgb(10 10 10 / 8%);
+  --shadow-md: 0 4px 12px rgb(10 10 10 / 12%);
+  --shadow-lg: 0 12px 32px rgb(10 10 10 / 16%);
+
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0.2, 1);
+
+  /* ---- layout ---------------------------------------------------------- */
+  --layout-max-width: 72rem;
+  --layout-gutter: var(--space-4);
+
+  /* ---- z-index --------------------------------------------------------- */
+  --z-dropdown: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+[data-theme='dark'] {
+  --color-primary-0: #0a0a0a;
+  --color-primary-950: #ffffff;
+
+  --color-grey-100: #1a1a1a;
+  --color-grey-200: #292929;
+  --color-grey-300: #434343;
+  --color-grey-400: #575757;
+  --color-grey-500: #767676;
+  --color-grey-600: #a5a5a5;
+  --color-grey-700: #d6d6d6;
+  --color-grey-800: #e6e6e6;
+  --color-grey-900: #f7f7f7;
+  --color-grey-950: #ffffff;
+
+  --color-red-50: #4b0405;
+  --color-red-400: #ff3a3d;
+  --color-red-500: #ff6466;
+  --color-red-950: #fff1f1;
+
+  --color-green-50: #052e18;
+  --color-green-400: #18b359;
+  --color-green-500: #4ade87;
+  --color-green-950: #f0fdf5;
+
+  --color-blue-50: #163055;
+  --color-blue-400: #37a3fa;
+  --color-blue-500: #5dc1fd;
+  --color-blue-950: #eff9ff;
+
+  --color-bg-raised: var(--color-grey-100);
+  --color-overlay: rgb(0 0 0 / 65%);
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 50%);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 60%);
+}

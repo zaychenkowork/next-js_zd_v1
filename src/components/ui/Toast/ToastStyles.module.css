@@ -1,0 +1,82 @@
+/**
+ * Toast styling is driven entirely by Base UI's `data-*` state attributes and
+ * its `--toast-*` custom properties — there is no JS animation state to keep in
+ * sync. Positioning uses logical `inset-inline-end` so the stack flips
+ * automatically in the `ar` locale.
+ */
+.viewport {
+  position: fixed;
+  inset-block-end: var(--space-4);
+  inset-inline-end: var(--space-4);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(24rem, calc(100vw - var(--space-6)));
+}
+
+.root {
+  display: flex;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-raised);
+  box-shadow: var(--shadow-md);
+  transition:
+    opacity var(--duration-base) var(--easing-standard),
+    transform var(--duration-base) var(--easing-standard);
+}
+
+.root[data-starting-style],
+.root[data-ending-style] {
+  opacity: 0;
+  transform: translateY(var(--space-3));
+}
+
+.root[data-type='success'] {
+  border-inline-start: 3px solid var(--color-success);
+}
+
+.root[data-type='error'] {
+  border-inline-start: 3px solid var(--color-danger);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  align-items: start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.description {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.close {
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-lg);
+  line-height: 1;
+}
+
+.close:hover {
+  color: var(--color-text);
+}

@@ -1,0 +1,16 @@
+# pnpm 11 reads settings from here, not from the "pnpm" field in package.json.
+# Dependency build scripts are blocked by default; these are the ones this
+# template needs:
+#   esbuild         — platform binary used by vite/vitest
+#   unrs-resolver   — native binding behind eslint-import-resolver-typescript
+#   msw             — copies mockServiceWorker.js into public/
+#   @swc/core       — used by the Storybook/vite pipeline
+#   @parcel/watcher — Storybook file watching
+#   @sentry/cli     — source-map upload during production builds
+allowBuilds:
+  '@parcel/watcher': true
+  '@sentry/cli': true
+  '@swc/core': true
+  esbuild: true
+  msw: true
+  unrs-resolver: true

@@ -1,0 +1,17 @@
+.count {
+  margin-block-end: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.empty {
+  padding-block: var(--space-7);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.more {
+  display: flex;
+  justify-content: center;
+  margin-block-start: var(--space-6);
+}

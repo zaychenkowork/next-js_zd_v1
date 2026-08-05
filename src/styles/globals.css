@@ -1,0 +1,10 @@
+/**
+ * The single global stylesheet, imported once from the locale layout. Order
+ * matters: tokens define the custom properties that base and typography read.
+ *
+ * Everything else in the app is a CSS Module (`*.module.css`) scoped to one
+ * component — see docs/theming.md.
+ */
+@import './tokens.css';
+@import './base.css';
+@import './typography.css';

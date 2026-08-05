@@ -1,0 +1,95 @@
+{
+  "common": {
+    "loading": "Завантаження…",
+    "retry": "Спробувати ще раз",
+    "close": "Закрити",
+    "cancel": "Скасувати",
+    "skipToContent": "Перейти до вмісту",
+    "footerNote": "Еталонний шаблон — Next.js App Router, Base UI, TanStack Query."
+  },
+  "nav": {
+    "mainNavigation": "Основна навігація",
+    "home": "Головна",
+    "products": "Товари",
+    "cart": "Кошик",
+    "account": "Акаунт",
+    "signIn": "Увійти",
+    "toggleTheme": "Змінити тему",
+    "changeLanguage": "Змінити мову"
+  },
+  "home": {
+    "title": "Шаблон Next.js",
+    "subtitle": "Еталонна архітектура: RSC для читання, Server Actions для запису, TanStack Query лише там, де даними володіє клієнт.",
+    "browse": "Перейти до товарів",
+    "featured": "Обрані товари"
+  },
+  "products": {
+    "title": "Товари",
+    "count": "{count, plural, =0 {Немає товарів} one {# товар} few {# товари} many {# товарів} other {# товару}}",
+    "empty": "За цими фільтрами нічого не знайдено.",
+    "resetFilters": "Скинути фільтри",
+    "search": "Пошук",
+    "searchPlaceholder": "Шукати товари",
+    "category": "Категорія",
+    "allCategories": "Усі категорії",
+    "sort": "Сортувати",
+    "sortNewest": "Найновіші",
+    "sortPriceAsc": "Ціна: від дешевих",
+    "sortPriceDesc": "Ціна: від дорогих",
+    "loadMore": "Показати ще",
+    "addToCart": "Додати в кошик",
+    "outOfStock": "Немає в наявності",
+    "inStock": "У наявності: {count}",
+    "backToList": "Назад до товарів"
+  },
+  "cart": {
+    "title": "Кошик",
+    "empty": "Ваш кошик порожній.",
+    "added": "Додано в кошик",
+    "removed": "Видалено з кошика",
+    "itemCount": "{count, plural, =0 {порожній} one {# товар} few {# товари} many {# товарів} other {# товару}}",
+    "total": "Разом",
+    "checkout": "Оформити замовлення",
+    "remove": "Видалити",
+    "decrease": "Зменшити кількість",
+    "increase": "Збільшити кількість",
+    "continueShopping": "Продовжити покупки"
+  },
+  "profile": {
+    "title": "Профіль",
+    "name": "Ім'я",
+    "email": "Електронна пошта",
+    "save": "Зберегти зміни",
+    "updated": "Профіль оновлено",
+    "firstName": "Ім'я",
+    "lastName": "Прізвище"
+  },
+  "auth": {
+    "signInTitle": "Вхід",
+    "email": "Електронна пошта",
+    "password": "Пароль",
+    "submit": "Увійти",
+    "signOut": "Вийти",
+    "signedOut": "Ви вийшли з акаунта",
+    "demoCredentials": "Демо-акаунт: emilys / emilyspass",
+    "signInSubtitle": "Увійдіть, щоб побачити свій профіль."
+  },
+  "errors": {
+    "generic": "Щось пішло не так. Спробуйте ще раз.",
+    "unauthorized": "Щоб побачити цю сторінку, потрібно увійти.",
+    "forbidden": "У вас немає доступу до цього.",
+    "notFound": "Не вдалося знайти те, що ви шукали.",
+    "network": "Немає зв'язку із сервером. Перевірте мережу та спробуйте ще раз.",
+    "notFoundTitle": "Сторінку не знайдено",
+    "notFoundBody": "Сторінка, яку ви шукаєте, не існує.",
+    "unexpectedTitle": "Неочікувана помилка",
+    "unexpectedBody": "Ми отримали повідомлення та розбираємося.",
+    "backHome": "На головну"
+  },
+  "validation": {
+    "required": "Це поле обов'язкове",
+    "email": "Введіть коректну електронну пошту",
+    "minLength": "Використайте щонайменше {min} символів",
+    "maxLength": "Використайте не більше {max} символів"
+  }
+}

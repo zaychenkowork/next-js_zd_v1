@@ -1,0 +1,66 @@
+/**
+ * Type scale. `--font-sans` is set by `next/font` in the locale layout, so the
+ * font is self-hosted and preloaded with no layout shift and no external
+ * request (which also keeps the strict CSP story simple).
+ */
+:root {
+  --font-fallback:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', roboto,
+    'Helvetica Neue', arial, 'Noto Sans', sans-serif;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  --line-height-loose: 1.7;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+}
+
+body {
+  font-family: var(--font-sans, var(--font-fallback));
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-base);
+  text-align: start;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-bold);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--font-size-3xl);
+}
+
+h2 {
+  font-size: var(--font-size-2xl);
+}
+
+h3 {
+  font-size: var(--font-size-xl);
+}
+
+h4 {
+  font-size: var(--font-size-lg);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+small {
+  font-size: var(--font-size-sm);
+}

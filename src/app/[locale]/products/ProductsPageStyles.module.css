@@ -1,0 +1,9 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-block-end: var(--space-5);
+  font-size: var(--font-size-2xl);
+}

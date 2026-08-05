@@ -1,0 +1,95 @@
+{
+  "common": {
+    "loading": "جارٍ التحميل…",
+    "retry": "حاول مرة أخرى",
+    "close": "إغلاق",
+    "cancel": "إلغاء",
+    "skipToContent": "الانتقال إلى المحتوى",
+    "footerNote": "قالب مرجعي — Next.js App Router وBase UI وTanStack Query."
+  },
+  "nav": {
+    "mainNavigation": "التنقل الرئيسي",
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "cart": "السلة",
+    "account": "الحساب",
+    "signIn": "تسجيل الدخول",
+    "toggleTheme": "تغيير المظهر",
+    "changeLanguage": "تغيير اللغة"
+  },
+  "home": {
+    "title": "قالب Next.js",
+    "subtitle": "معمارية مرجعية: RSC للقراءة، وServer Actions للكتابة، وTanStack Query فقط حيث يملك العميل البيانات.",
+    "browse": "استعرض المنتجات",
+    "featured": "منتجات مختارة"
+  },
+  "products": {
+    "title": "المنتجات",
+    "count": "{count, plural, =0 {لا توجد منتجات} one {منتج واحد} two {منتجان} few {# منتجات} many {# منتجًا} other {# منتج}}",
+    "empty": "لا يوجد ما يطابق هذه الفلاتر.",
+    "resetFilters": "إعادة تعيين الفلاتر",
+    "search": "بحث",
+    "searchPlaceholder": "ابحث في المنتجات",
+    "category": "الفئة",
+    "allCategories": "كل الفئات",
+    "sort": "ترتيب حسب",
+    "sortNewest": "الأحدث",
+    "sortPriceAsc": "السعر: من الأقل",
+    "sortPriceDesc": "السعر: من الأعلى",
+    "loadMore": "عرض المزيد",
+    "addToCart": "أضف إلى السلة",
+    "outOfStock": "غير متوفر",
+    "inStock": "المتوفر: {count}",
+    "backToList": "العودة إلى المنتجات"
+  },
+  "cart": {
+    "title": "السلة",
+    "empty": "سلتك فارغة.",
+    "added": "أُضيف إلى السلة",
+    "removed": "أُزيل من السلة",
+    "itemCount": "{count, plural, =0 {فارغة} one {عنصر واحد} two {عنصران} few {# عناصر} many {# عنصرًا} other {# عنصر}}",
+    "total": "الإجمالي",
+    "checkout": "إتمام الشراء",
+    "remove": "إزالة",
+    "decrease": "تقليل الكمية",
+    "increase": "زيادة الكمية",
+    "continueShopping": "متابعة التسوق"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "save": "حفظ التغييرات",
+    "updated": "تم تحديث الملف الشخصي",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة"
+  },
+  "auth": {
+    "signInTitle": "تسجيل الدخول",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "submit": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج",
+    "signedOut": "تم تسجيل الخروج",
+    "demoCredentials": "حساب تجريبي: emilys / emilyspass",
+    "signInSubtitle": "سجّل الدخول لعرض ملفك الشخصي."
+  },
+  "errors": {
+    "generic": "حدث خطأ ما. حاول مرة أخرى.",
+    "unauthorized": "يجب تسجيل الدخول لعرض هذه الصفحة.",
+    "forbidden": "ليست لديك صلاحية الوصول إلى هذا.",
+    "notFound": "لم نتمكن من العثور على ما تبحث عنه.",
+    "network": "لا يوجد اتصال بالخادم. تحقّق من الشبكة وحاول مرة أخرى.",
+    "notFoundTitle": "الصفحة غير موجودة",
+    "notFoundBody": "الصفحة التي تبحث عنها غير موجودة.",
+    "unexpectedTitle": "خطأ غير متوقع",
+    "unexpectedBody": "تم إبلاغنا ونحن نعمل على حله.",
+    "backHome": "العودة إلى الرئيسية"
+  },
+  "validation": {
+    "required": "هذا الحقل مطلوب",
+    "email": "أدخل بريدًا إلكترونيًا صحيحًا",
+    "minLength": "استخدم {min} أحرف على الأقل",
+    "maxLength": "استخدم {max} أحرف كحد أقصى"
+  }
+}

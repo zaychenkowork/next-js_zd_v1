@@ -1,0 +1,104 @@
+/**
+ * State comes from Base UI's `data-*` attributes, never from a JS-computed class
+ * name — `[data-disabled]`, `[data-pressed]`, `[data-popup-open]` are stable
+ * parts of its API. See docs/ui-kit.md.
+ */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    border-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.button[data-disabled],
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.label {
+  display: contents;
+}
+
+.loading .label {
+  /* Keeps the label in the accessibility tree while the spinner is shown, so the
+     button never becomes an unlabelled control mid-request. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* ---- sizes ------------------------------------------------------------- */
+.size-s {
+  min-height: 2rem;
+  padding-inline: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.size-m {
+  min-height: 2.5rem;
+  padding-inline: var(--space-4);
+  font-size: var(--font-size-sm);
+}
+
+.size-l {
+  min-height: 3rem;
+  padding-inline: var(--space-5);
+  font-size: var(--font-size-md);
+}
+
+/* ---- variants ---------------------------------------------------------- */
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-primary-0);
+}
+
+.primary:hover:not([data-disabled]):not(:disabled) {
+  background-color: var(--color-blue-400);
+}
+
+.secondary {
+  border-color: var(--color-border);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.secondary:hover:not([data-disabled]):not(:disabled) {
+  border-color: var(--color-border-strong);
+  background-color: var(--color-bg-subtle);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--color-text);
+}
+
+.ghost:hover:not([data-disabled]):not(:disabled) {
+  background-color: var(--color-bg-subtle);
+}
+
+.danger {
+  background-color: var(--color-danger);
+  color: var(--color-primary-0);
+}
+
+.danger:hover:not([data-disabled]):not(:disabled) {
+  background-color: var(--color-red-400);
+}

@@ -1,0 +1,95 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "retry": "Try again",
+    "close": "Close",
+    "cancel": "Cancel",
+    "skipToContent": "Skip to content",
+    "footerNote": "Reference template — Next.js App Router, Base UI, TanStack Query."
+  },
+  "nav": {
+    "mainNavigation": "Main navigation",
+    "home": "Home",
+    "products": "Products",
+    "cart": "Cart",
+    "account": "Account",
+    "signIn": "Sign in",
+    "toggleTheme": "Toggle theme",
+    "changeLanguage": "Change language"
+  },
+  "home": {
+    "title": "Next.js template",
+    "subtitle": "Reference architecture: RSC for reads, Server Actions for writes, TanStack Query only where the client owns the data.",
+    "browse": "Browse products",
+    "featured": "Featured products"
+  },
+  "products": {
+    "title": "Products",
+    "count": "{count, plural, =0 {No products} one {# product} other {# products}}",
+    "empty": "Nothing matches these filters.",
+    "resetFilters": "Reset filters",
+    "search": "Search",
+    "searchPlaceholder": "Search products",
+    "category": "Category",
+    "allCategories": "All categories",
+    "sort": "Sort by",
+    "sortNewest": "Newest",
+    "sortPriceAsc": "Price: low to high",
+    "sortPriceDesc": "Price: high to low",
+    "loadMore": "Load more",
+    "addToCart": "Add to cart",
+    "outOfStock": "Out of stock",
+    "inStock": "{count} in stock",
+    "backToList": "Back to products"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "added": "Added to cart",
+    "removed": "Removed from cart",
+    "itemCount": "{count, plural, =0 {empty} one {# item} other {# items}}",
+    "total": "Total",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "decrease": "Decrease quantity",
+    "increase": "Increase quantity",
+    "continueShopping": "Continue shopping"
+  },
+  "profile": {
+    "title": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "save": "Save changes",
+    "updated": "Profile updated",
+    "firstName": "First name",
+    "lastName": "Last name"
+  },
+  "auth": {
+    "signInTitle": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "signOut": "Sign out",
+    "signedOut": "Signed out",
+    "demoCredentials": "Demo account: emilys / emilyspass",
+    "signInSubtitle": "Sign in to see your profile."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "unauthorized": "You need to sign in to see this page.",
+    "forbidden": "You do not have access to this.",
+    "notFound": "We could not find what you were looking for.",
+    "network": "No connection to the server. Check your network and try again.",
+    "notFoundTitle": "Page not found",
+    "notFoundBody": "The page you are looking for does not exist.",
+    "unexpectedTitle": "Unexpected error",
+    "unexpectedBody": "We have been notified and are looking into it.",
+    "backHome": "Back to home"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Enter a valid email address",
+    "minLength": "Use at least {min} characters",
+    "maxLength": "Use at most {max} characters"
+  }
+}

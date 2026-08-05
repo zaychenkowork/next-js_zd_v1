@@ -1,0 +1,24 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: start;
+  max-width: 36rem;
+  margin-inline: auto;
+  padding-block: var(--space-8);
+  text-align: start;
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+
+.description {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.action {
+  margin-block-start: var(--space-2);
+}
