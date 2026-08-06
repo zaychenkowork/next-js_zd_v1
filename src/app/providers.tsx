@@ -1,5 +1,6 @@
 'use client';
 
+import { ThemeProvider } from 'next-themes';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Toast } from '@base-ui/react/toast';
 import { Tooltip } from '@base-ui/react/tooltip';
@@ -12,6 +13,8 @@ import { toastManager } from '~/components/ui/Toast/toastManager';
 import { getBrowserQueryClient } from '~/api/browserQueryClient';
 
 import { CLIENT_ENV } from '~/config/env';
+
+import { STORAGE_KEYS } from '~/constants/storageKeys';
 
 import toastStyles from '~/components/ui/Toast/ToastStyles.module.css';
 
@@ -37,29 +40,36 @@ export function Providers({ children, direction }: ProvidersProps) {
   const queryClient = getBrowserQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <DirectionProvider direction={direction}>
-        {/* One provider for the whole app: it shares the hover delay between
-            tooltips, so moving along a row of icon buttons does not replay the
-            open delay on each one. */}
-        <Tooltip.Provider delay={300}>
-          <Toast.Provider toastManager={toastManager}>
-            {/* #app-root carries `isolation: isolate`, which Base UI requires
-                for predictable portal stacking. */}
-            <div id="app-root">{children}</div>
+    <ThemeProvider
+      attribute="data-theme"
+      defaultTheme="system"
+      enableSystem
+      storageKey={STORAGE_KEYS.theme}
+    >
+      <QueryClientProvider client={queryClient}>
+        <DirectionProvider direction={direction}>
+          {/* One provider for the whole app: it shares the hover delay between
+              tooltips, so moving along a row of icon buttons does not replay the
+              open delay on each one. */}
+          <Tooltip.Provider delay={300}>
+            <Toast.Provider toastManager={toastManager}>
+              {/* #app-root carries `isolation: isolate`, which Base UI requires
+                  for predictable portal stacking. */}
+              <div id="app-root">{children}</div>
 
-            <Toast.Portal>
-              <Toast.Viewport className={toastStyles.viewport}>
-                <ToastList />
-              </Toast.Viewport>
-            </Toast.Portal>
-          </Toast.Provider>
-        </Tooltip.Provider>
-      </DirectionProvider>
+              <Toast.Portal>
+                <Toast.Viewport className={toastStyles.viewport}>
+                  <ToastList />
+                </Toast.Viewport>
+              </Toast.Portal>
+            </Toast.Provider>
+          </Tooltip.Provider>
+        </DirectionProvider>
 
-      {CLIENT_ENV.NEXT_PUBLIC_ENABLE_DEVTOOLS ? (
-        <ReactQueryDevtools initialIsOpen={false} />
-      ) : null}
-    </QueryClientProvider>
+        {CLIENT_ENV.NEXT_PUBLIC_ENABLE_DEVTOOLS ? (
+          <ReactQueryDevtools initialIsOpen={false} />
+        ) : null}
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }

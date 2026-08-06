@@ -1,36 +1,26 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
-
-import { useThemeStore } from '~/store/useThemeStore';
+import { useTheme } from 'next-themes';
 
 import styles from './ThemeSwitcherStyles.module.css';
 
 /**
  * Which icon is visible is decided by CSS matching `[data-theme]` on `<html>`,
- * not by reading `theme` from the store. That is what keeps this component
+ * not by reading the theme in JavaScript. That is what keeps this component
  * hydration-safe: the server has no way to know the user's theme, so any
  * JS-driven icon choice would render one glyph on the server and the other on
  * the client.
- *
- * The effect exists only to bring the store in line with the theme the
- * pre-hydration script already applied, for code that reads `theme` in JS.
  */
 export function ThemeSwitcher() {
   const t = useTranslations('nav');
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
-  const syncFromDocument = useThemeStore((state) => state.syncFromDocument);
-
-  useEffect(() => {
-    syncFromDocument();
-  }, [syncFromDocument]);
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <button
       type="button"
       className={styles.button}
-      onClick={toggleTheme}
+      onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
       aria-label={t('toggleTheme')}
     >
       <SunIcon className={styles.sun} />

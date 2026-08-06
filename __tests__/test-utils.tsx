@@ -1,4 +1,5 @@
 import { NextIntlClientProvider } from 'next-intl';
+import { ThemeProvider } from 'next-themes';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Toast } from '@base-ui/react/toast';
 import { Tooltip } from '@base-ui/react/tooltip';
@@ -9,6 +10,7 @@ import { render } from '@testing-library/react';
 import { toastManager } from '~/components/ui/Toast/toastManager';
 
 import { DEFAULT_LOCALE } from '~/constants/locales';
+import { STORAGE_KEYS } from '~/constants/storageKeys';
 
 import messages from '../messages/uk.json';
 
@@ -34,19 +36,26 @@ function createTestQueryClient() {
 
 function AllProviders({ children }: { children: React.ReactNode }) {
   return (
-    <NextIntlClientProvider locale={DEFAULT_LOCALE} messages={messages}>
-      <QueryClientProvider client={createTestQueryClient()}>
-        <DirectionProvider direction="ltr">
-          {/* `delay: 0` so hover tests do not have to wait out the app's 300ms
-              open delay. */}
-          <Tooltip.Provider delay={0}>
-            <Toast.Provider toastManager={toastManager}>
-              {children}
-            </Toast.Provider>
-          </Tooltip.Provider>
-        </DirectionProvider>
-      </QueryClientProvider>
-    </NextIntlClientProvider>
+    <ThemeProvider
+      attribute="data-theme"
+      defaultTheme="light"
+      enableSystem={false}
+      storageKey={STORAGE_KEYS.theme}
+    >
+      <NextIntlClientProvider locale={DEFAULT_LOCALE} messages={messages}>
+        <QueryClientProvider client={createTestQueryClient()}>
+          <DirectionProvider direction="ltr">
+            {/* `delay: 0` so hover tests do not have to wait out the app's 300ms
+                open delay. */}
+            <Tooltip.Provider delay={0}>
+              <Toast.Provider toastManager={toastManager}>
+                {children}
+              </Toast.Provider>
+            </Tooltip.Provider>
+          </DirectionProvider>
+        </QueryClientProvider>
+      </NextIntlClientProvider>
+    </ThemeProvider>
   );
 }
 

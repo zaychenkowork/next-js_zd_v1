@@ -7,7 +7,6 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { Providers } from '~/app/providers';
 
 import { MainLayout } from '~/components/layouts/MainLayout/MainLayout';
-import { ThemeScript } from '~/components/layouts/ThemeScript';
 
 import { getCartLines } from '~/server/dal/cart';
 import { getSession } from '~/server/session';
@@ -106,12 +105,13 @@ export default async function LocaleLayout({
   ]);
 
   return (
-    <html lang={locale} dir={direction} className={inter.variable}>
+    <html
+      lang={locale}
+      dir={direction}
+      className={inter.variable}
+      suppressHydrationWarning
+    >
       <body>
-        {/* Must stay the first child of <body>: it applies the stored theme
-            before the first paint. */}
-        <ThemeScript />
-
         <NextIntlClientProvider>
           <Providers direction={direction}>
             <MainLayout

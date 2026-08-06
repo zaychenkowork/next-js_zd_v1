@@ -37,26 +37,25 @@ token instead.
 
 ## Dark mode without a flash
 
-Three pieces:
+[`next-themes`](https://github.com/pacocoursey/next-themes) owns the browser theme.
+The provider in [`src/app/providers.tsx`](../src/app/providers.tsx) is configured to:
 
-1. [`ThemeScript`](../src/components/layouts/ThemeScript.tsx) — a blocking inline
-   script, rendered as the **first child of `<body>`**. It reads `localStorage`,
-   falls back to `prefers-color-scheme`, and writes `data-theme` on `<html>` before
-   the browser paints.
-2. [`useThemeStore`](../src/store/useThemeStore.ts) — holds the value for JavaScript,
-   starting from the same constant the server rendered and catching up in an effect.
-3. CSS — `[data-theme='dark']` redefines the scale.
+- write the resolved theme to `data-theme` on `<html>`;
+- use the namespaced `zd:theme` local-storage key;
+- follow `prefers-color-scheme` until the user chooses a theme;
+- keep the preference synchronized between tabs.
+
+Its inline script applies the stored or system theme before the browser paints. CSS
+then uses `[data-theme='dark']` to redefine the scale. The `<html>` element keeps
+`suppressHydrationWarning` because that pre-hydration attribute change is deliberate.
 
 Why an inline script and not a cookie: a cookie read in the layout also avoids the
 flash, but calls `cookies()` and so opts every page out of static rendering. For a
 preference this cheap, the script is the better trade.
 
-Why it must be in `<body>` and not `<head>`: React 19 hoists `<link>`, `<meta>` and
-`<script src>` into `<head>`, but **not** inline scripts. As the first child of
-`<body>` it still runs before any content is painted.
-
-If you add a strict CSP, this script needs a nonce — read it from `headers()` in the
-layout and pass it through to the `nonce` attribute.
+If you add a strict CSP, pass its nonce to `ThemeProvider`. Reading that nonce from
+`headers()` makes the layout request-time rendered, so only add it together with the
+CSP implementation.
 
 ### Why the switcher's icon is CSS
 
@@ -74,8 +73,9 @@ layout and pass it through to the `nonce` attribute.
 
 The server cannot know the user's theme, so any JS-driven icon choice would render
 one glyph on the server and the other on the client — a hydration mismatch on every
-page. Letting CSS decide means the markup is identical on both sides. The store is
-still there for code that needs the value in JavaScript.
+page. Letting CSS decide means the markup is identical on both sides. Code that needs
+the value in JavaScript uses `useTheme`; `theme` and `resolvedTheme` are unavailable
+until the component mounts.
 
 ## CSS Modules, and the naming rule
 

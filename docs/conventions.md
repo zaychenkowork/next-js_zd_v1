@@ -48,8 +48,8 @@ TypeScript server on a large project. `no-restricted-imports` fails a build on
 | Component file   | `PascalCase.tsx`, in a folder of its own | `Button/Button.tsx`                 |
 | CSS module       | `<ComponentName>Styles.module.css`       | `ButtonStyles.module.css`           |
 | Hook             | `use<Thing>.ts`                          | `useProductsInfiniteQuery.ts`       |
-| Store            | `use<Thing>Store.ts`                     | `useThemeStore.ts`                  |
-| Zustand selector | `select<Thing>`                          | `selectTheme`                       |
+| Store            | `use<Thing>Store.ts`                     | `useDrawerStore.ts`                 |
+| Zustand selector | `select<Thing>`                          | `selectIsDrawerOpen`                |
 | API method       | `<subject><HttpVerb>`                    | `productsGet`, `profilePut`         |
 | Query factory    | `<domain>Queries`                        | `productQueries`                    |
 | Server Action    | `<verb><Subject>Action`                  | `addToCartAction`                   |

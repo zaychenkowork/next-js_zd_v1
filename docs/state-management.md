@@ -13,55 +13,44 @@ policies and no way to know which copy the user is looking at.
 | Profile, orders              | **Server**, uncached | DAL with `authorization` header (never Data-Cached)    |
 | Filters, sort, search term   | **URL**              | `searchParams`                                         |
 | "Load more" accumulated list | **Client**           | TanStack Query `useInfiniteQuery`                      |
-| Theme                        | **Client**           | Zustand + `localStorage` + a pre-paint script          |
+| Theme                        | **Client**           | `next-themes` + `localStorage` + a pre-paint script    |
 | Drawer/modal open state      | **Client**           | Local `useState`, or Zustand if two components need it |
 
 If you are about to add a `useQuery` for something in the first four rows, stop and
 ask which copy is authoritative. Usually the answer is "the server one", and the
 component wants a prop.
 
-## What Zustand is for
+## When a client store is justified
 
-**Client UI state that outlives a single component and never needs to be
-authoritative.** Theme. A drawer's open flag. A multi-step wizard's current step.
+Use local `useState` until client UI state must be coordinated by distant components
+or outlive the component that created it. A drawer shared by the header and several
+feature entry points may justify a small store; a single dialog does not.
 
-What it is _not_ for: server data. This is not a stylistic preference — Redux's own
-documentation says the same thing about itself:
+Do not put server data in a client store. This is not a stylistic preference —
+Redux's own documentation says the same thing about itself:
 
 > "only use Redux for globally shared, mutable data"
 
-and recommends RTK Query (i.e. a query cache) rather than sagas for loading data.
-The Zustand and Redux SSR guides agree on the two Next-specific rules:
+and recommends a query cache rather than a general store for loading data. Zustand
+is installed for shared client UI state. When creating a store, keep two
+Next-specific rules:
 
 1. **One store per request on the server.** A module-level store in a long-lived
-   Node process is shared across users. This template's only store is theme, which
-   is client-only, so the question does not arise — but the moment you add a store
-   that holds anything per-user, it has to be created in a provider, not at module
-   scope.
-2. **Server Components never read a store.** They cannot (no hooks), and they should
-   not need to: whatever they would read from it, they can read from the request.
+   Node process is shared across users. Per-user state has to be created in a
+   provider, not at module scope.
+2. **Server Components never read a store.** They cannot use client hooks, and they
+   should read authoritative data from the request instead.
 
-## Theme: why it looks over-engineered
+## Theme is specialized client state
 
-[`useThemeStore`](../src/store/useThemeStore.ts) does **not** use zustand's `persist`
-middleware, unlike the plain-React template. `persist` reads storage synchronously
-while the store module evaluates, and in the browser that happens during hydration —
-so the first client render would see `dark` while the server rendered `light`. That
-is a hydration mismatch on every component that reads `theme`.
+[`next-themes`](https://github.com/pacocoursey/next-themes) owns theme persistence,
+system-preference detection, cross-tab synchronization and the pre-paint script.
+[`ThemeSwitcher`](../src/components/ThemeSwitcher/ThemeSwitcher.tsx) uses its
+`useTheme` hook to change the theme.
 
-The App Router version splits the two jobs:
-
-- The **visible** theme is applied before first paint by
-  [`ThemeScript`](../src/components/layouts/ThemeScript.tsx), which writes
-  `data-theme` on `<html>` — an attribute React does not own, so there is nothing to
-  mismatch on.
-- The **store** carries the value for JavaScript that needs it, starting from the
-  same constant the server used and catching up in an effect (`syncFromDocument`).
-
-And [`ThemeSwitcher`](../src/components/ThemeSwitcher/ThemeSwitcher.tsx) picks its
-icon with CSS (`:global([data-theme='dark']) .sun { display: none }`) rather than
-from `theme`, so the markup is identical on both sides. See
-[theming.md](./theming.md).
+The switcher still picks its icon with CSS
+(`:global([data-theme='dark']) .sun { display: none }`) rather than from React state,
+so its server and client markup remain identical. See [theming.md](./theming.md).
 
 The alternative — a theme cookie read in the layout — has no flash and no mismatch
 either, but calls `cookies()` and so opts every page out of static rendering. For a

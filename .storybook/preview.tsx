@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
+import { ThemeProvider, useTheme } from 'next-themes';
 import { DirectionProvider } from '@base-ui/react/direction-provider';
 import { Toast } from '@base-ui/react/toast';
 import { Tooltip } from '@base-ui/react/tooltip';
@@ -14,7 +15,8 @@ import {
   LOCALE_DIRECTIONS,
   LOCALE_NAMES,
 } from '~/constants/locales';
-import { THEMES } from '~/constants/theme';
+import { STORAGE_KEYS } from '~/constants/storageKeys';
+import { type Theme, THEMES } from '~/constants/theme';
 
 import arMessages from '../messages/ar.json';
 import enMessages from '../messages/en.json';
@@ -43,7 +45,7 @@ const queryClient = new QueryClient({
 type AppProvidersProps = {
   children: React.ReactNode;
   locale: Locale;
-  theme: string;
+  theme: Theme;
 };
 
 /**
@@ -53,12 +55,13 @@ type AppProvidersProps = {
  */
 function AppProviders({ children, locale, theme }: AppProvidersProps) {
   const direction = LOCALE_DIRECTIONS[locale];
+  const { setTheme } = useTheme();
 
   useEffect(() => {
-    document.documentElement.dataset.theme = theme;
+    setTheme(theme);
     document.documentElement.lang = locale;
     document.documentElement.dir = direction;
-  }, [theme, locale, direction]);
+  }, [theme, locale, direction, setTheme]);
 
   return (
     <NextIntlClientProvider locale={locale} messages={MESSAGES[locale]}>
@@ -85,14 +88,22 @@ function AppProviders({ children, locale, theme }: AppProvidersProps) {
   );
 }
 
-const withAppProviders: Decorator = (Story, context) => (
-  <AppProviders
-    locale={context.globals.locale as Locale}
-    theme={context.globals.theme as string}
-  >
-    <Story />
-  </AppProviders>
-);
+const withAppProviders: Decorator = (Story, context) => {
+  const theme = context.globals.theme as Theme;
+
+  return (
+    <ThemeProvider
+      attribute="data-theme"
+      defaultTheme={theme}
+      enableSystem={false}
+      storageKey={STORAGE_KEYS.theme}
+    >
+      <AppProviders locale={context.globals.locale as Locale} theme={theme}>
+        <Story />
+      </AppProviders>
+    </ThemeProvider>
+  );
+};
 
 const preview: Preview = {
   initialGlobals: {
