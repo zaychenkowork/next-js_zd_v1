@@ -126,6 +126,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         size="s"
         className={styles.back}
         render={<Link href="/products" />}
+        nativeButton={false}
       >
         {t('backToList')}
       </Button>

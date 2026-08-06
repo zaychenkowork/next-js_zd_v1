@@ -51,6 +51,7 @@ export default async function CartPage({ params }: CartPageProps) {
           <Button
             variant="secondary"
             render={<Link href="/products" />}
+            nativeButton={false}
             className={styles.emptyAction}
           >
             {t('continueShopping')}

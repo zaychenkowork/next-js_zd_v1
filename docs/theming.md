@@ -48,6 +48,9 @@ The provider in [`src/app/providers.tsx`](../src/app/providers.tsx) is configure
 Its inline script applies the stored or system theme before the browser paints. CSS
 then uses `[data-theme='dark']` to redefine the scale. The `<html>` element keeps
 `suppressHydrationWarning` because that pre-hydration attribute change is deliberate.
+The script is `text/javascript` during server rendering and `text/plain` during the
+client render. This preserves pre-paint execution while avoiding React 19's warning
+about executable script tags rendered by Client Components.
 
 Why an inline script and not a cookie: a cookie read in the layout also avoids the
 flash, but calls `cookies()` and so opts every page out of static rendering. For a

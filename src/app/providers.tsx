@@ -45,6 +45,9 @@ export function Providers({ children, direction }: ProvidersProps) {
       defaultTheme="system"
       enableSystem
       storageKey={STORAGE_KEYS.theme}
+      scriptProps={{
+        type: typeof window === 'undefined' ? 'text/javascript' : 'text/plain',
+      }}
     >
       <QueryClientProvider client={queryClient}>
         <DirectionProvider direction={direction}>

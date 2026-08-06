@@ -47,7 +47,11 @@ export default async function HomePage({
       <section className={styles.hero}>
         <h1>{t('home.title')}</h1>
         <p className={styles.subtitle}>{t('home.subtitle')}</p>
-        <Button size="l" render={<Link href="/products" />}>
+        <Button
+          size="l"
+          render={<Link href="/products" />}
+          nativeButton={false}
+        >
           {t('home.browse')}
         </Button>
       </section>

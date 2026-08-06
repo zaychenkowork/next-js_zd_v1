@@ -41,6 +41,7 @@ function AllProviders({ children }: { children: React.ReactNode }) {
       defaultTheme="light"
       enableSystem={false}
       storageKey={STORAGE_KEYS.theme}
+      scriptProps={{ type: 'text/plain' }}
     >
       <NextIntlClientProvider locale={DEFAULT_LOCALE} messages={messages}>
         <QueryClientProvider client={createTestQueryClient()}>

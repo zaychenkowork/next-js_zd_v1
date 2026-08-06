@@ -97,6 +97,7 @@ const withAppProviders: Decorator = (Story, context) => {
       defaultTheme={theme}
       enableSystem={false}
       storageKey={STORAGE_KEYS.theme}
+      scriptProps={{ type: 'text/plain' }}
     >
       <AppProviders locale={context.globals.locale as Locale} theme={theme}>
         <Story />
