@@ -31,17 +31,12 @@ export const updateProfileSchema = z.object({
 ```
 
 The schema is shared between server and client and cannot know the user's locale.
-So it emits keys, and the form translates at the point of display:
+So it emits keys. [`ControlledTextField`](../src/components/ui/TextField/ControlledTextField.tsx)
+translates them at render (same exception as `ToastList` — see
+[ui-kit.md](./ui-kit.md)). Labels and other copy still go through `t()` at the form.
 
-```tsx
-const errorKey = (name: 'firstName' | 'lastName' | 'email') => {
-  const message = form.formState.errors[name]?.message;
-  return message ? t(message as never) : undefined;
-};
-```
-
-The `as never` is the one wart: keys arrive as plain strings at runtime, so the
-compile-time key union cannot be applied. Everything else stays type-safe.
+The `as never` wart lives inside `ControlledTextField`: keys arrive as plain strings
+at runtime, so the compile-time key union cannot be applied.
 
 ## The standard form
 
@@ -77,7 +72,7 @@ first paint rather than after an effect.
 
 | Hook                           | When                                                                                           |
 | ------------------------------ | ---------------------------------------------------------------------------------------------- |
-| `useHookFormAction`            | The default. Uncontrolled inputs via `register`.                                               |
+| `useHookFormAction`            | The default. Wire fields with `ControlledTextField`.                                           |
 | `useHookFormActionErrorMapper` | You are building the form yourself (`useForm` + `Controller`) and only want the error mapping. |
 | `useHookFormOptimisticAction`  | The form should show its new value before the server confirms.                                 |
 
@@ -85,20 +80,20 @@ The package also ships AI-agent skills: `npx skills add next-safe-action/skills`
 installs nine of them, including `safe-action-testing` and
 `safe-action-tanstack-query`.
 
-## Uncontrolled by default
+## Controlled by default
 
 ```tsx
-// Default — React does not re-render on keystrokes. This is why RHF is fast.
-<TextField {...form.register('email')} error={errorKey('email')} />
+// Default — schema keys translate inside the field
+<ControlledTextField control={form.control} name="email" label={t('…')} />
 
-// Only when a value has to drive something else as you type
-<ControlledTextField control={form.control} name="email" translateError={t} />
+// Uncontrolled — only when you need DOM-held value and will wire errors yourself
+<TextField {...form.register('email')} error={…} />
 ```
 
 [`ControlledTextField`](../src/components/ui/TextField/ControlledTextField.tsx)
-exists for dependent fields, live previews, and non-native controls. It subscribes
-to the field and re-renders on every change — worth it when you need it, wasteful
-when you don't.
+subscribes to the field and re-renders on every change. That is the cost of getting
+errors (and live values) without form-level glue. Reach for `register` when a field
+must stay uncontrolled for performance or for a non-React consumer.
 
 ## Base UI's Field, with validation handed over
 
@@ -117,9 +112,9 @@ when you don't.
 state is controlled by an external library"_. Two validation engines fighting over
 one input is a class of bug worth designing out.
 
-`error` arrives already translated, because `components/ui` knows nothing about
-i18n — which is what lets these primitives render in Storybook and in tests without
-a provider.
+`TextField` still takes an already-translated `error` string — it stays
+provider-free for Storybook and unit tests. `ControlledTextField` is the layer that
+turns a schema key into that string.
 
 `ref` is a plain prop: React 19 forwards it to function components without
 `forwardRef`, which is what makes `{...register('email')}` work unchanged.

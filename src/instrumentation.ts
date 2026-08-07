@@ -26,6 +26,6 @@ export async function register() {
  * logged to the console and lost.
  *
  * It does not catch anything you handled yourself in a `try/catch` — that is what
- * `reportError` (client) and `handleServerError` (actions) are for.
+ * `reportClientError` (client) and `handleServerError` (actions) are for.
  */
 export const onRequestError = Sentry.captureRequestError;

@@ -30,17 +30,18 @@ even if the import slips past the linter.
 
 ## What lives where
 
-| Folder                                                     | Contains                                                                  | Rule of thumb                                                                         |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `src/app/`                                                 | Routing only: pages, layouts, route handlers, metadata                    | If it is not a Next file convention, it does not belong here                          |
-| `src/features/`                                            | Feature-specific composites — a product card, a cart line, a sign-in form | Used by one feature                                                                   |
-| `src/components/`                                          | Shared composites — layouts, error states, switchers                      | Used by two or more features                                                          |
-| `src/components/ui/`                                       | Presentational primitives on Base UI                                      | No stores, no API. Text arrives already translated — `ToastList` is the one exception |
-| `src/server/`                                              | `session.ts`, `dal/`, `cache/`, `actions/`                                | Server-only, `import 'server-only'` at the top                                        |
-| `src/api/`                                                 | `client.ts` (transport), `api.ts` (endpoints), `queries/`                 | Isomorphic; knows nothing about auth                                                  |
-| `src/store/`                                               | Zustand stores                                                            | Client UI state only — see [state-management.md](./state-management.md)               |
-| `src/schemas/`                                             | zod schemas and the types inferred from them                              | One source of truth per shape                                                         |
-| `src/i18n/`, `src/config/`, `src/constants/`, `src/types/` | Leaves of the graph                                                       | No upward imports, ever                                                               |
+| Folder                                                     | Contains                                                                  | Rule of thumb                                                                                       |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `src/app/`                                                 | Routing only: pages, layouts, route handlers, metadata                    | If it is not a Next file convention, it does not belong here                                        |
+| `src/features/`                                            | Feature-specific composites — a product card, a cart line, a sign-in form | Used by one feature                                                                                 |
+| `src/components/`                                          | Shared composites — layouts, error states, switchers                      | Used by two or more features                                                                        |
+| `src/components/ui/`                                       | Presentational primitives on Base UI                                      | No stores, no API. Text arrives already translated — exceptions: `ToastList`, `ControlledTextField` |
+| `src/server/`                                              | `session.ts`, `dal/`, `cache/`, `actions/`                                | Server-only, `import 'server-only'` at the top                                                      |
+| `src/api/`                                                 | `client.ts` (transport), `api.ts` (endpoints), `queries/`                 | Isomorphic; knows nothing about auth                                                                |
+| `src/store/`                                               | Zustand stores                                                            | Client UI state only — see [state-management.md](./state-management.md)                             |
+| `src/schemas/`                                             | zod schemas and the types inferred from them                              | One source of truth per shape                                                                       |
+| `src/assets/`                                              | `icons/` (SVG → React components), `images/`, `fonts/`                    | Imported by components; `public/` is only for files whose URL is the contract                       |
+| `src/i18n/`, `src/config/`, `src/constants/`, `src/types/` | Leaves of the graph                                                       | No upward imports, ever                                                                             |
 
 ## The promotion rule
 
@@ -95,5 +96,6 @@ and a missing test or story is visible as a missing file. See
 | Forms and validation                      | [forms.md](./forms.md)                                 |
 | Sessions, authorization, tokens           | [auth.md](./auth.md)                                   |
 | Tokens, dark mode, RTL                    | [theming.md](./theming.md)                             |
+| Where do images and SVGs go?              | [assets.md](./assets.md)                               |
 | Base UI conventions                       | [ui-kit.md](./ui-kit.md)                               |
 | Naming, commits, env                      | [conventions.md](./conventions.md)                     |

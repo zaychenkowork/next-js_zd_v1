@@ -91,7 +91,7 @@ Two mistakes that are easy to make and quiet when made:
 | ---------------------------------------------- | ----------------------------------------------------------- | -------------------------- |
 | Browser client — the only one `useQuery` reads | [`browserQueryClient.ts`](../src/api/browserQueryClient.ts) | One per browser session    |
 | SSR pass of that same file                     | same file, `environmentManager.isServer()` branch           | One per request            |
-| Prefetch client for `dehydrate()`              | [`queryClient.ts`](../src/api/queryClient.ts)               | One per request, discarded |
+| Prefetch client for `dehydrate()`              | [`serverQueryClient.ts`](../src/api/serverQueryClient.ts)   | One per request, discarded |
 
 The second row is the subtle one. `browserQueryClient.ts` is a Client Component
 module, which still executes on the server during SSR — so it must hand back a
@@ -102,7 +102,7 @@ Note what `providers.tsx` does **not** do:
 
 ```tsx
 // Wrong, per TanStack's own guidance:
-const [queryClient] = useState(() => makeQueryClient());
+const [queryClient] = useState(() => new QueryClient());
 ```
 
 > "Avoid useState when initializing the query client if you don't have a suspense

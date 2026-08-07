@@ -2,16 +2,17 @@
 
 ## What is in it
 
-| Component                                                                       | Base UI counterpart                |
-| ------------------------------------------------------------------------------- | ---------------------------------- |
-| [`Button`](../src/components/ui/Button/Button.tsx)                              | `Button`                           |
-| [`TextField`](../src/components/ui/TextField/TextField.tsx)                     | `Field` + `Field.Control`          |
-| [`ControlledTextField`](../src/components/ui/TextField/ControlledTextField.tsx) | — (react-hook-form wrapper)        |
-| [`Dialog`](../src/components/ui/Dialog/Dialog.tsx)                              | `Dialog`                           |
-| [`Tooltip`](../src/components/ui/Tooltip/Tooltip.tsx)                           | `Tooltip`                          |
-| [`Toast`](../src/components/ui/Toast/)                                          | `Toast`                            |
-| [`Spinner`](../src/components/ui/Spinner/Spinner.tsx)                           | — (hand-written)                   |
-| [`Skeleton`](../src/components/ui/Skeleton/Skeleton.tsx)                        | **none — Base UI has no Skeleton** |
+| Component                                                                       | Base UI counterpart                            |
+| ------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [`Button`](../src/components/ui/Button/Button.tsx)                              | `Button`                                       |
+| [`TextField`](../src/components/ui/TextField/TextField.tsx)                     | `Field` + `Field.Control`                      |
+| [`ControlledTextField`](../src/components/ui/TextField/ControlledTextField.tsx) | — (react-hook-form wrapper)                    |
+| [`Dialog`](../src/components/ui/Dialog/Dialog.tsx)                              | `Dialog`                                       |
+| [`Tooltip`](../src/components/ui/Tooltip/Tooltip.tsx)                           | `Tooltip`                                      |
+| [`Toast`](../src/components/ui/Toast/)                                          | `Toast`                                        |
+| [`Spinner`](../src/components/ui/Spinner/Spinner.tsx)                           | — (hand-written)                               |
+| [`Icon`](../src/components/ui/Icon/Icon.tsx)                                    | — (SVGR wrapper, see [assets.md](./assets.md)) |
+| [`Skeleton`](../src/components/ui/Skeleton/Skeleton.tsx)                        | **none — Base UI has no Skeleton**             |
 
 Base UI 1.7 ships Progress and Meter but nothing for content placeholders, so
 `Skeleton` is the one component in the kit with no upstream counterpart. If a
@@ -61,7 +62,7 @@ properties. There is no JS animation state to keep in sync.
 | File                                         | Directive      | Why                                                                                                                                                      |
 | -------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `Button`, `Skeleton`, `Spinner`, `TextField` | none           | No hooks. Stays a **shared** module: a Server Component can render it, and a Client Component importing it pulls it into the client graph automatically. |
-| `ControlledTextField`                        | `'use client'` | `useController`                                                                                                                                          |
+| `ControlledTextField`                        | `'use client'` | `useController` + `useTranslations` (schema error keys)                                                                                                  |
 | `Dialog`, `Tooltip`                          | `'use client'` | Open state and focus trapping                                                                                                                            |
 | `Toast/*`                                    | `'use client'` | `createToastManager()` runs at module scope                                                                                                              |
 
@@ -140,12 +141,15 @@ product twice.
 1. `src/components/ui/<Name>/<Name>.tsx` + `<Name>Styles.module.css`.
 2. Wrap the Base UI primitive; do not reimplement one that exists.
 3. Style through `data-*` and tokens. No hex values, no `left`/`right`.
-4. Take an already-translated string for anything user-visible. The one exception
-   is `Toast/ToastList.tsx`: the toast manager can only carry i18n **keys**, because
-   its callers (a query-cache callback, an action's `onError`) have no `t` function —
-   so translation has to happen at render time, inside the locale provider. Every
-   other primitive stays provider-free, which is what lets it render in Storybook
-   and in tests without one.
+4. Take an already-translated string for anything user-visible. Two exceptions call
+   `t()` at render because they receive i18n **keys**, not copy:
+   - `Toast/ToastList.tsx` — the toast manager can only carry keys (callers like a
+     query-cache callback or an action's `onError` have no `t`);
+   - `TextField/ControlledTextField.tsx` — zod schemas emit validation keys, and
+     translating them here keeps every form free of `errorKey` / `translateError`
+     glue.
+     Every other primitive stays provider-free, which is what lets it render in
+     Storybook and in tests without one.
 5. Add `__tests__/components/ui/<Name>/<Name>.test.tsx` and
    `stories/components/ui/<Name>/<Name>.stories.tsx`. The mirrored trees make a
    missing one visible.

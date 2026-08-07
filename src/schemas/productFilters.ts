@@ -1,10 +1,6 @@
 import { z } from 'zod';
 
-export const PRODUCT_SORTS = ['newest', 'priceAsc', 'priceDesc'] as const;
-
-export type ProductSort = (typeof PRODUCT_SORTS)[number];
-
-export const PRODUCTS_PAGE_SIZE = 12;
+import { PRODUCT_SORTS } from '~/constants/products';
 
 /**
  * Parses `searchParams` into filters. Every field uses `.catch()` rather than

@@ -105,8 +105,7 @@ is _our_ bug, not the user's.
 | `0`                                               | No response at all — DNS, connection reset, timeout, abort |
 | any, with `code === 'RESPONSE_VALIDATION_FAILED'` | Body did not match the schema                              |
 
-Guards: `isApiError`, `isTransportError`, `isUnauthorizedError`. One `catch`, one
-type.
+Guards: `isApiError`, `isUnauthorizedError`. One `catch`, one type.
 
 `this.name = 'ApiError'` is set explicitly in the constructor — without it the class
 name is lost through transpilation and Sentry groups every API failure under
@@ -122,7 +121,7 @@ Errors are centralised. Successes are not.
 
 ```
                          ┌── MutationCache.onError ──┐
-thrown client-side ──────┤                           ├── reportError ──→ toast + Sentry
+thrown client-side ──────┤                           ├── reportClientError ──→ toast + Sentry
                          └── QueryCache.onError ─────┘
 
 useAction / useOptimisticAction onError ── reportActionError ──→ toast only
@@ -137,13 +136,13 @@ fires once per hook instance, so two components sharing one query would show two
 toasts for one failure. The global cache fires once per query — which is why v5
 removed `onError` from `useQuery` in the first place.
 
-Why `reportError` exists at all: Sentry captures _unhandled_ exceptions
+Why `reportClientError` exists at all: Sentry captures _unhandled_ exceptions
 automatically, but anything swallowed by a `try/catch` — which is exactly what a
 failed mutation does — is invisible to it.
 
 Two details that matter:
 
-- `reportError` **skips** `Sentry.captureException` for an `ActionMutationError`.
+- `reportClientError` **skips** `Sentry.captureException` for an `ActionMutationError`.
   That failure was already captured on the server by `handleServerError`, with a
   stack trace this side never sees; capturing again doubles the event count and adds
   nothing.

@@ -5,12 +5,12 @@ import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 
 import { Button } from '~/components/ui/Button/Button';
-import { TextField } from '~/components/ui/TextField/TextField';
+import { ControlledTextField } from '~/components/ui/TextField/ControlledTextField';
 import { showToast } from '~/components/ui/Toast/showToast';
 
 import { updateProfileAction } from '~/server/actions/profile';
 
-import { reportActionError } from '~/api/reportError';
+import { reportActionError } from '~/api/reportClientError';
 
 import { updateProfileSchema, type UserProfile } from '~/schemas/user';
 
@@ -61,35 +61,30 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
     },
   );
 
-  const errorKey = (name: 'firstName' | 'lastName' | 'email') => {
-    const message = form.formState.errors[name]?.message;
-    return message ? t(message as never) : undefined;
-  };
-
   return (
     <form onSubmit={handleSubmitWithAction} className={styles.form} noValidate>
       <div className={styles.row}>
-        <TextField
+        <ControlledTextField
+          control={form.control}
+          name="firstName"
           label={t('profile.firstName')}
           autoComplete="given-name"
-          error={errorKey('firstName')}
-          {...form.register('firstName')}
         />
 
-        <TextField
+        <ControlledTextField
+          control={form.control}
+          name="lastName"
           label={t('profile.lastName')}
           autoComplete="family-name"
-          error={errorKey('lastName')}
-          {...form.register('lastName')}
         />
       </div>
 
-      <TextField
+      <ControlledTextField
+        control={form.control}
+        name="email"
         label={t('profile.email')}
         type="email"
         autoComplete="email"
-        error={errorKey('email')}
-        {...form.register('email')}
       />
 
       <Button

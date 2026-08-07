@@ -1,11 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  ApiError,
-  isApiError,
-  isTransportError,
-  isUnauthorizedError,
-} from '~/api/errors';
+import { ApiError, isApiError, isUnauthorizedError } from '~/api/errors';
 
 describe('ApiError', () => {
   it('keeps its class name so Sentry groups issues by error type', () => {
@@ -40,11 +35,6 @@ describe('error guards', () => {
     expect(isApiError(make(500))).toBe(true);
     expect(isApiError(new Error('plain'))).toBe(false);
     expect(isApiError('not an error')).toBe(false);
-  });
-
-  it('treats only status 0 as a transport failure', () => {
-    expect(isTransportError(make(0))).toBe(true);
-    expect(isTransportError(make(500))).toBe(false);
   });
 
   it('treats only status 401 as unauthorized', () => {

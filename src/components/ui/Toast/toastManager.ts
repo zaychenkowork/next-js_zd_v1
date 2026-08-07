@@ -4,7 +4,7 @@ import { Toast } from '@base-ui/react/toast';
 
 /**
  * A standalone toast manager created outside React, so imperative,
- * non-component code (the global MutationCache callbacks, `reportError`) can
+ * non-component code (the global MutationCache callbacks, `reportClientError`) can
  * raise a toast without a hook.
  *
  * `'use client'` is required: the manager is instantiated at module scope, so

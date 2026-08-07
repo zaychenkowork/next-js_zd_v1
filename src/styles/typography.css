@@ -32,6 +32,17 @@ body {
   text-align: start;
 }
 
+/**
+ * Inter carries no Arabic glyphs. Noto Sans Arabic goes first so Arabic script
+ * (and digits) use it; Latin falls through to Inter, which is next in the
+ * chain. `:lang()` matches through inheritance from `<html lang>`.
+ */
+body:lang(ar) {
+  font-family:
+    var(--font-arabic, var(--font-fallback)),
+    var(--font-sans, var(--font-fallback));
+}
+
 h1,
 h2,
 h3,

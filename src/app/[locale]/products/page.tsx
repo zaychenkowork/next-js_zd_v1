@@ -8,7 +8,7 @@ import { ProductsInfinite } from '~/features/catalog/ProductsInfinite/ProductsIn
 import { getCategories } from '~/server/dal/products';
 
 import { productQueries } from '~/api/queries/products/productQueries';
-import { getServerQueryClient } from '~/api/queryClient';
+import { getServerQueryClient } from '~/api/serverQueryClient';
 
 import { parseProductFilters } from '~/schemas/productFilters';
 

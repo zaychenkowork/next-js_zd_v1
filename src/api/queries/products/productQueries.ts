@@ -2,10 +2,9 @@ import { infiniteQueryOptions } from '@tanstack/react-query';
 
 import { api } from '~/api/api';
 
-import {
-  type ProductFilters,
-  PRODUCTS_PAGE_SIZE,
-} from '~/schemas/productFilters';
+import type { ProductFilters } from '~/schemas/productFilters';
+
+import { PRODUCTS_PAGE_SIZE } from '~/constants/products';
 
 /**
  * Query factory for the catalog. `queryOptions()` / `infiniteQueryOptions()`

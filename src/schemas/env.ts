@@ -6,8 +6,8 @@ import { z } from 'zod';
  * browser bundle, everything else exists on the server alone. Validating one
  * combined schema would therefore fail on the client for server-only keys.
  *
- * See src/config/env.ts for the parsing, and docs/conventions.md for the rule
- * about never reading `process.env` outside that file.
+ * Only the shapes live here; src/config/env.ts does the reading and parsing and
+ * is the one file allowed to touch `process.env`. See docs/conventions.md.
  */
 export const serverEnvSchema = z.object({
   API_URL: z.url(),

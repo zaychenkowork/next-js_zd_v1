@@ -60,6 +60,14 @@ If you add a strict CSP, pass its nonce to `ThemeProvider`. Reading that nonce f
 `headers()` makes the layout request-time rendered, so only add it together with the
 CSP implementation.
 
+## Icons inherit the theme colour
+
+Nothing in `tokens.css` mentions icons, and nothing needs to. SVGR rewrites the
+exported fill to `currentColor` at build time, so an icon takes whatever `color` its
+container has — including a semantic token — and dark mode costs zero icon-specific
+CSS. The mechanics, and what to change when your design system exports a different
+black, are in [assets.md](./assets.md#icons-svg-that-becomes-a-component).
+
 ### Why the switcher's icon is CSS
 
 ```css
@@ -160,9 +168,16 @@ stays simple. `typography.css` reads
 `font-family: var(--font-sans, var(--font-fallback))`, so the fallback stack applies
 in Storybook and in tests where `next/font` is not running.
 
-Arabic is not covered by Inter's Latin/Cyrillic subsets. For production Arabic, add a
-second `next/font` call (Noto Sans Arabic or Cairo) and bind it to a second variable
-used under `[lang='ar']`.
+Arabic is not covered by Inter's Latin/Cyrillic subsets, so the layout loads a second
+face — Noto Sans Arabic, bound to `--font-arabic` — and `typography.css` applies it
+under `body:lang(ar)` with Inter second in the chain for Latin glyphs. It is declared
+with `preload: false` (only the `ar` locale references it, a preload would ship it to
+every locale) and `adjustFontFallback: false` (the synthesized Arial-based fallback
+contains Arabic and would intercept it ahead of the real font).
+
+For a licensed face `next/font/google` cannot serve, the file goes in
+`src/assets/fonts/` and is loaded with `next/font/local` — not `public/` and not a
+raw `@font-face`. See [assets.md](./assets.md#fonts).
 
 ## Reduced motion
 

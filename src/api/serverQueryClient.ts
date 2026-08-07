@@ -12,16 +12,13 @@ import { QUERY_DEFAULT_OPTIONS } from '~/config/query';
  *  2. The same file's SSR pass — a Client Component still executes on the
  *     server, so it must return a *fresh* client there, never the module-level
  *     singleton, or one Node process would share cache across users.
- *  3. This file's `makeQueryClient()` — a throwaway client used by Server
+ *  3. This file's `getServerQueryClient()` — a throwaway client used by Server
  *     Components purely to run `prefetchQuery` and be handed to `dehydrate()`.
  *     It renders nothing and dies with the request.
  *
  * This module intentionally imports no UI code so it stays safe to pull into a
  * Server Component graph. See docs/rsc-and-data-fetching.md.
  */
-export function makeQueryClient() {
-  return new QueryClient({ defaultOptions: QUERY_DEFAULT_OPTIONS });
-}
 
 /**
  * Role 3. Always a new instance: a fresh client per call cannot leak between
@@ -33,5 +30,5 @@ export function makeQueryClient() {
  * described in docs/rsc-and-data-fetching.md.
  */
 export function getServerQueryClient() {
-  return makeQueryClient();
+  return new QueryClient({ defaultOptions: QUERY_DEFAULT_OPTIONS });
 }

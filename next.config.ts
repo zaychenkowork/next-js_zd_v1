@@ -1,12 +1,33 @@
 import type { NextConfig } from 'next';
+import type { TurbopackLoaderOptions } from 'next/dist/server/config-shared';
 import createNextIntlPlugin from 'next-intl/plugin';
 import { withSentryConfig } from '@sentry/nextjs';
+
+import { version } from './package.json';
+import { ICONS_PATH_PATTERN, svgrOptions } from './svgr.config.js';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+
+  /**
+   * Build-time constants, not deployment configuration — the `env` key inlines
+   * whatever is listed here into both bundles at build time, so nothing about
+   * it can vary per environment. `.env` remains the only route for anything a
+   * deployment sets.
+   *
+   * This is the one thing the key is still good for: `package.json` is the
+   * source of truth for the version, and importing it from application code
+   * would ship the whole file (dependency list included) to the browser.
+   * `CONFIG.APP_VERSION` reads the result. The Next docs mark `env` as legacy
+   * in favour of `.env` — correct for actual environment variables, which this
+   * is not.
+   */
+  env: {
+    APP_VERSION: version,
+  },
 
   /**
    * Cache Components (`cacheComponents: true`) stays OFF deliberately.
@@ -33,6 +54,50 @@ const nextConfig: NextConfig = {
      * normal `pnpm build` never ships it.
      */
     testProxy: process.env.NEXT_TEST_PROXY === 'true',
+  },
+
+  turbopack: {
+    /**
+     * Turns the SVGs in `src/assets/icons/` into React components, so an icon
+     * can inherit `color` and take props instead of being an opaque `<img>`.
+     * Turbopack is the bundler in Next 16 — a `webpack()` block would be dead
+     * config here, which is the trap when copying this from an older project.
+     *
+     * The rule is *scoped*, and that is the load-bearing part. A blanket
+     * `'*.svg'` rule turns every SVG in the repo into a component, which quietly
+     * breaks `next/image` static imports and anything else expecting a URL. The
+     * condition confines the transform to `src/assets/icons/`; everything else
+     * keeps Next's default asset handling. `{ not: 'foreign' }` keeps the loader
+     * from being invoked on `node_modules`.
+     *
+     * `as: '*.js'` tells Turbopack the loader returns JavaScript — without it
+     * the output is treated as an asset again and the rule does nothing.
+     *
+     * See docs/assets.md.
+     */
+    rules: {
+      '*.svg': {
+        condition: {
+          all: [{ not: 'foreign' }, { path: ICONS_PATH_PATTERN }],
+        },
+        loaders: [
+          {
+            loader: '@svgr/webpack',
+            /**
+             * Turbopack types loader options as `Record<string, JSONValue>`
+             * because it serializes them across the JS/Rust boundary — SVGR's
+             * own `Config` describes the same object more precisely but has no
+             * index signature, so the two are structurally incompatible even
+             * though every value here is JSON. The cast is the whole reason
+             * `svgr.config.js` sticks to plain data: a function-valued option
+             * would type-check after this cast and then fail at build time.
+             */
+            options: svgrOptions as TurbopackLoaderOptions,
+          },
+        ],
+        as: '*.js',
+      },
+    },
   },
 
   images: {

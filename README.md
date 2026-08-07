@@ -63,6 +63,7 @@ axios instance. → [api-layer.md](./docs/api-layer.md)
 | [forms.md](./docs/forms.md)                                 | One schema validated twice, i18n keys in validation              |
 | [auth.md](./docs/auth.md)                                   | Sessions, authorization in the DAL, refresh, OTP guidance        |
 | [theming.md](./docs/theming.md)                             | Tokens, dark mode without a flash, RTL                           |
+| [assets.md](./docs/assets.md)                               | `src/assets/` vs `public/`, the SVG pipeline, `next/image` rules |
 | [ui-kit.md](./docs/ui-kit.md)                               | Base UI conventions, `data-*` styling, a11y rules                |
 | [testing.md](./docs/testing.md)                             | Two suites, coverage policy, Playwright gotchas                  |
 | [storybook.md](./docs/storybook.md)                         | `nextjs-vite`, locale/theme toolbars                             |
@@ -87,6 +88,7 @@ src/
 ├── schemas/             zod schemas + inferred types
 ├── i18n/                routing · request · navigation · messages/
 │   └── messages/        uk.json · en.json · ar.json
+├── assets/              icons/ (→ React components) · images/ · fonts/
 ├── config/ constants/ types/ styles/
 ├── proxy.ts             locale routing only, no authorization
 └── instrumentation*.ts  Sentry

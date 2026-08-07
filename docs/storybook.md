@@ -35,6 +35,19 @@ Vite's native `resolve.tsconfigPaths` does not apply to importers inside a
 dot-directory, so `.storybook/preview.tsx` cannot resolve `~/...` without this. Same
 class of workaround as `vitest.config.ts` needing its own config.
 
+`viteFinal` is also where the SVGR transform gets registered — the third and last
+place, after `next.config.ts` and `vitest.config.ts`. Storybook builds its own Vite
+pipeline and inherits neither, so without it an `Icon` story renders a broken element
+while the same component is fine in the app. All three read
+[`svgr.config.js`](../svgr.config.js).
+
+Registering the plugin is necessary but **not sufficient** here: this framework's
+`next/image` emulation claims every `.svg` in `resolveId`, one hook before SVGR gets
+a `load`, so it also needs `framework.options.image.excludeFiles`. The full
+explanation — including why the wrong spelling of that option fails silently and the
+build still passes — is in
+[assets.md](./assets.md#storybook-needs-one-more-line-than-the-other-two).
+
 ## Locale and theme are toolbar globals
 
 [`preview.tsx`](../.storybook/preview.tsx) registers two `globalTypes`, so every story

@@ -6,10 +6,9 @@ import { CACHE_TAGS, CATALOG_REVALIDATE_SECONDS } from '~/server/cache/tags';
 
 import { api } from '~/api/api';
 
-import {
-  type ProductFilters,
-  PRODUCTS_PAGE_SIZE,
-} from '~/schemas/productFilters';
+import type { ProductFilters } from '~/schemas/productFilters';
+
+import { PRODUCTS_PAGE_SIZE } from '~/constants/products';
 
 /**
  * The Data Access Layer for the catalog: the only place in the app that decides

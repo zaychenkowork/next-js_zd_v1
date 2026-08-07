@@ -8,7 +8,7 @@ import { showToast } from '~/components/ui/Toast/showToast';
 
 import { removeFromCartAction } from '~/server/actions/cart';
 
-import { reportActionError } from '~/api/reportError';
+import { reportActionError } from '~/api/reportClientError';
 
 /**
  * The plainest possible action call: `useAction`, no optimistic state, no client

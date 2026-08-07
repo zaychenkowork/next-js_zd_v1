@@ -1,5 +1,8 @@
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 import { defineConfig } from 'vitest/config';
+
+import { ICONS_GLOB, svgrOptions } from './svgr.config.js';
 
 /**
  * Unit and component tests run under Vite, not under Next — which sets a hard
@@ -22,7 +25,15 @@ export default defineConfig({
     // Native tsconfig `paths` resolution (Vite 8) — replaces vite-tsconfig-paths.
     tsconfigPaths: true,
   },
-  plugins: [react()],
+  /**
+   * The SVGR transform has to be repeated here, with the *same* options
+   * `next.config.ts` gives Turbopack. Vitest never loads `next.config.ts`, so
+   * without this an icon import resolves to Vite's default for an asset — a
+   * string — and every test rendering an `Icon` fails with React being handed a
+   * data URI where it expected a component. Sharing `svgr.config.js` is what
+   * keeps the two from drifting. See docs/assets.md.
+   */
+  plugins: [react(), svgr({ svgrOptions, include: ICONS_GLOB })],
   test: {
     globals: true,
     environment: 'jsdom',

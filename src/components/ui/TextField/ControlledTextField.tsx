@@ -6,25 +6,20 @@ import {
   type FieldValues,
   useController,
 } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 
 import { TextField, type TextFieldProps } from './TextField';
 
 /**
  * `TextField` bound to react-hook-form.
  *
- * Both variants exist because the choice is not cosmetic:
+ * Subscribes to the field and re-renders on every change. Prefer this over
+ * `{...register()}` when wiring forms: schema validation messages are i18n
+ * **keys**, and this component translates them at render time (same reason
+ * `ToastList` calls `t()` — the key arrives as a plain string from outside
+ * the locale boundary).
  *
- *   - `<TextField {...register('email')} error={...} />` keeps the input
- *     uncontrolled. React never re-renders on keystrokes, which is why
- *     react-hook-form is fast. Use it by default.
- *   - `<ControlledTextField control={control} name="email" />` subscribes to the
- *     field and re-renders on every change. Needed when a value has to drive
- *     something else as you type (a dependent field, a live preview) or when the
- *     control is not a native input.
- *
- * The one thing this component does *not* do is translate. `error` is passed in
- * already localised — validation messages in the zod schemas are i18n keys, so
- * the form resolves them with `t()` before they get here. See docs/forms.md.
+ * Pass an already-translated `error` to override the schema message.
  */
 type ControlledTextFieldProps<
   TFieldValues extends FieldValues,
@@ -32,8 +27,6 @@ type ControlledTextFieldProps<
 > = Omit<TextFieldProps, 'name' | 'value' | 'onChange' | 'onBlur' | 'ref'> & {
   control: Control<TFieldValues>;
   name: TName;
-  /** Maps the raw validation message (an i18n key) to display text. */
-  translateError?: (message: string) => string;
 };
 
 const ControlledTextField = <
@@ -42,16 +35,15 @@ const ControlledTextField = <
 >({
   control,
   name,
-  translateError,
   error,
   ...textFieldProps
 }: ControlledTextFieldProps<TFieldValues, TName>) => {
+  const t = useTranslations();
   const { field, fieldState } = useController({ control, name });
   const { value } = field;
 
   const message = fieldState.error?.message;
-  const resolvedError =
-    error ?? (message ? (translateError?.(message) ?? message) : undefined);
+  const resolvedError = error ?? (message ? t(message) : undefined);
 
   return (
     <TextField

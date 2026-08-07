@@ -4,6 +4,9 @@ import { useTransition } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Select } from '@base-ui/react/select';
 
+import { Icon } from '~/components/ui/Icon/Icon';
+import { Icons } from '~/components/ui/Icon/types';
+
 import { usePathname, useRouter } from '~/i18n/navigation';
 
 import { type Locale, LOCALE_NAMES, LOCALES } from '~/constants/locales';
@@ -59,7 +62,9 @@ export function LanguageSwitcher() {
       >
         <Select.Value className={styles.value} />
         <Select.Icon className={styles.icon}>
-          <CaretIcon />
+          {/* No `title`: the trigger is already labelled, so the chevron is
+              decorative and stays out of the accessibility tree. */}
+          <Icon type={Icons.Chevron} size={14} />
         </Select.Icon>
       </Select.Trigger>
 
@@ -74,7 +79,7 @@ export function LanguageSwitcher() {
               {LOCALES.map((code) => (
                 <Select.Item key={code} value={code} className={styles.item}>
                   <Select.ItemIndicator className={styles.indicator}>
-                    <CheckIcon />
+                    <Icon type={Icons.Check} size={14} />
                   </Select.ItemIndicator>
                   <Select.ItemText className={styles.itemText}>
                     {LOCALE_NAMES[code]}
@@ -86,28 +91,5 @@ export function LanguageSwitcher() {
         </Select.Positioner>
       </Select.Portal>
     </Select.Root>
-  );
-}
-
-function CaretIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-      <path d="M11 10H5l3 3.5zm0-4H5l3-3.5z" />
-    </svg>
-  );
-}
-
-function CheckIcon() {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path d="m2.5 8.5 4 4 7-9" />
-    </svg>
   );
 }

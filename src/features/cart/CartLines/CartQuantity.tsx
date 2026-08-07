@@ -7,7 +7,7 @@ import { Button } from '~/components/ui/Button/Button';
 
 import { setCartQuantityAction } from '~/server/actions/cart';
 
-import { reportActionError } from '~/api/reportError';
+import { reportActionError } from '~/api/reportClientError';
 
 import styles from './CartQuantityStyles.module.css';
 
@@ -21,7 +21,7 @@ import styles from './CartQuantityStyles.module.css';
  * missing is covering the network latency, which is exactly what
  * `optimisticState` does.
  *
- * `reportActionError` and not `reportError`: hook errors arrive as a result
+ * `reportActionError` and not `reportClientError`: hook errors arrive as a result
  * envelope, and the server has already sent this failure to Sentry through
  * `handleServerError`. Only the toast is missing.
  */

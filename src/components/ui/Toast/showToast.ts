@@ -5,12 +5,21 @@ import { toastManager } from '~/components/ui/Toast/toastManager';
 export type ToastType = 'success' | 'error' | 'info';
 
 export type ShowToastOptions = {
-  /** i18n key, e.g. `'cart.added'` — not a pre-translated string. */
+  /*
+   * i18n key, e.g. `'cart.added'` — not a pre-translated string.
+   */
   titleKey: string;
-  /** Optional second line, also an i18n key. */
+  /*
+   * Optional second line, also an i18n key.
+   */
   descriptionKey?: string;
+  /*
+   * The type of toast to display.
+   */
   type?: ToastType;
-  /** ICU values for the title key. */
+  /*
+   * ICU values for the title key.
+   */
   values?: Record<string, string | number>;
 };
 

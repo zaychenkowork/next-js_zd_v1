@@ -3,7 +3,8 @@ import type { QueryKey } from '@tanstack/react-query';
 /**
  * Typed `meta` for queries and mutations. This is the officially supported
  * extension point (`interface Register`) and it is what lets the global caches
- * in src/api/queryClient.ts stay generic while call sites stay declarative.
+ * in src/api/browserQueryClient.ts stay generic while call sites stay
+ * declarative.
  *
  * `interface` rather than `type` here because declaration merging is the whole
  * point — see docs/conventions.md.

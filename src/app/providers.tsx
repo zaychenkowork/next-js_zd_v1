@@ -12,7 +12,7 @@ import { toastManager } from '~/components/ui/Toast/toastManager';
 
 import { getBrowserQueryClient } from '~/api/browserQueryClient';
 
-import { CLIENT_ENV } from '~/config/env';
+import { CONFIG } from '~/config/config';
 
 import { STORAGE_KEYS } from '~/constants/storageKeys';
 
@@ -69,7 +69,7 @@ export function Providers({ children, direction }: ProvidersProps) {
           </Tooltip.Provider>
         </DirectionProvider>
 
-        {CLIENT_ENV.NEXT_PUBLIC_ENABLE_DEVTOOLS ? (
+        {CONFIG.ENABLE_DEVTOOLS ? (
           <ReactQueryDevtools initialIsOpen={false} />
         ) : null}
       </QueryClientProvider>

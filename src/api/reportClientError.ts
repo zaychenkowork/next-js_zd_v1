@@ -11,11 +11,17 @@ import { showToast } from '~/components/ui/Toast/showToast';
 import { isApiError, RESPONSE_VALIDATION_FAILED } from '~/api/errors';
 
 type ReportErrorOptions = {
-  /** i18n key for the toast. Overrides whatever the error itself suggests. */
+  /*
+   * i18n key for the toast. Overrides whatever the error itself suggests.
+   */
   messageKey?: string;
-  /** Set to false for errors that should be recorded but not shown. */
+  /*
+   * Set to false for errors that should be recorded but not shown.
+   */
   toast?: boolean;
-  /** Extra context attached to the Sentry event. */
+  /*
+   * Extra context attached to the Sentry event.
+   */
   context?: Record<string, unknown>;
 };
 
@@ -34,8 +40,11 @@ type ReportErrorOptions = {
  *
  * Success messages are deliberately *not* centralised: they are contextual, so
  * they stay at the call site. See docs/api-layer.md.
+ *
+ * Named `reportClientError` rather than `reportError` to avoid shadowing the
+ * browser-global `window.reportError`.
  */
-export function reportError(
+export function reportClientError(
   error: unknown,
   { messageKey, toast = true, context }: ReportErrorOptions = {},
 ) {
@@ -60,8 +69,8 @@ export function reportError(
 /**
  * The same funnel for next-safe-action's own hooks (`useAction`,
  * `useOptimisticAction`). They report failures through an `onError` callback
- * rather than by throwing, so there is no error object for `reportError` to
- * inspect — just the result envelope.
+ * rather than by throwing, so there is no error object for `reportClientError`
+ * to inspect — just the result envelope.
  *
  * Validation errors are not toasted: they belong next to the field that caused
  * them, and a form that shows both an inline message and a toast reads as two

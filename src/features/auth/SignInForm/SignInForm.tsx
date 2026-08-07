@@ -5,11 +5,11 @@ import { standardSchemaResolver } from '@hookform/resolvers/standard-schema';
 import { useHookFormAction } from '@next-safe-action/adapter-react-hook-form/hooks';
 
 import { Button } from '~/components/ui/Button/Button';
-import { TextField } from '~/components/ui/TextField/TextField';
+import { ControlledTextField } from '~/components/ui/TextField/ControlledTextField';
 
 import { signInAction } from '~/server/actions/auth';
 
-import { reportActionError } from '~/api/reportError';
+import { reportActionError } from '~/api/reportClientError';
 
 import { signInSchema } from '~/schemas/user';
 
@@ -31,8 +31,8 @@ import styles from './SignInFormStyles.module.css';
  * v1, which is the interface both react-hook-form and next-safe-action now speak.
  * One less adapter in the dependency graph.
  *
- * Validation messages in the schema are i18n **keys**. They are translated here,
- * at the point of display — the only place that knows the user's locale.
+ * Validation messages in the schema are i18n **keys**. `ControlledTextField`
+ * translates them at render — labels and other copy still go through `t()` here.
  */
 const SignInForm = () => {
   const t = useTranslations();
@@ -48,26 +48,21 @@ const SignInForm = () => {
     },
   );
 
-  const errorKey = (name: 'username' | 'password') => {
-    const message = form.formState.errors[name]?.message;
-    return message ? t(message as never) : undefined;
-  };
-
   return (
     <form onSubmit={handleSubmitWithAction} className={styles.form} noValidate>
-      <TextField
+      <ControlledTextField
+        control={form.control}
+        name="username"
         label={t('auth.email')}
         autoComplete="username"
-        error={errorKey('username')}
-        {...form.register('username')}
       />
 
-      <TextField
+      <ControlledTextField
+        control={form.control}
+        name="password"
         label={t('auth.password')}
         type="password"
         autoComplete="current-password"
-        error={errorKey('password')}
-        {...form.register('password')}
       />
 
       <Button type="submit" loading={action.isPending} fullWidth>

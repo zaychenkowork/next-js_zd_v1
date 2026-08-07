@@ -13,12 +13,32 @@
 export const RESPONSE_VALIDATION_FAILED = 'RESPONSE_VALIDATION_FAILED';
 
 type ApiErrorInit = {
+  /*
+   * The error message.
+   */
   message: string;
+  /*
+   * The HTTP status code.
+   */
   status: number;
+  /*
+   * The URL of the API endpoint.
+   */
   url: string;
+  /*
+   * The error code.
+   */
   code?: string;
-  /** Field-level messages, keyed by field name, when the API returns them. */
+  /*
+   * Field-level messages, keyed by field name, when the API returns them.
+   */
+  /*
+   * Field-level messages, keyed by field name, when the API returns them.
+   */
   details?: Record<string, string[]>;
+  /*
+   * The cause of the error.
+   */
   cause?: unknown;
 };
 
@@ -43,11 +63,6 @@ export class ApiError extends Error {
 
 export function isApiError(error: unknown): error is ApiError {
   return error instanceof ApiError;
-}
-
-/** No response was received — worth a "check your connection" message. */
-export function isTransportError(error: unknown): boolean {
-  return isApiError(error) && error.status === 0;
 }
 
 export function isUnauthorizedError(error: unknown): boolean {

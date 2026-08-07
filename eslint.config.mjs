@@ -200,6 +200,31 @@ export default tseslint.config(
           message:
             'Use the validated env from ~/config/env instead of process.env directly.',
         },
+        {
+          /**
+           * `const { env } = process` reaches the same object without ever
+           * writing `process.env`, so the selector above misses it. Worth its
+           * own entry rather than being written off as pedantry: Next inlines
+           * `NEXT_PUBLIC_*` by static analysis, so this form does not just
+           * dodge the convention, it silently yields `undefined` in the
+           * browser.
+           */
+          selector: "VariableDeclarator[init.name='process'] > ObjectPattern",
+          message:
+            'Destructuring `process` bypasses ~/config/env and breaks Next’s build-time inlining of NEXT_PUBLIC_* variables.',
+        },
+        {
+          selector:
+            "JSXAttribute[name.name='className'] > JSXExpressionContainer > TemplateLiteral",
+          message:
+            'Compose class names with cn() from `classnames`, not a template literal.',
+        },
+        {
+          selector:
+            "JSXAttribute[name.name='className'] > JSXExpressionContainer > BinaryExpression[operator='+']",
+          message:
+            'Compose class names with cn() from `classnames`, not string concatenation.',
+        },
       ],
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],

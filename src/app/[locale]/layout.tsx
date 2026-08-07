@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Noto_Sans_Arabic } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
+import cn from 'classnames';
 
 import { Providers } from '~/app/providers';
 
@@ -23,6 +24,25 @@ const inter = Inter({
   subsets: ['latin', 'latin-ext', 'cyrillic'],
   variable: '--font-sans',
   display: 'swap',
+});
+
+/**
+ * Inter has no Arabic glyphs, so the `ar` locale gets its own face, applied by
+ * `typography.css` under `body:lang(ar)` with Inter second in the chain for
+ * Latin and digits.
+ *
+ * `preload: false` — the font is referenced only under `lang="ar"`; a preload
+ * would ship it to every locale. `adjustFontFallback: false` — the synthesized
+ * fallback is Arial-based and *does* contain Arabic, so it would intercept
+ * Arabic glyphs ahead of Inter's own fallback and muddle the chain; the plain
+ * system fallback is good enough for the one swap on first visit.
+ */
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ['arabic'],
+  variable: '--font-arabic',
+  display: 'swap',
+  preload: false,
+  adjustFontFallback: false,
 });
 
 /**
@@ -107,7 +127,7 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       dir={direction}
-      className={inter.variable}
+      className={cn(inter.variable, notoSansArabic.variable)}
       suppressHydrationWarning
     >
       <body>

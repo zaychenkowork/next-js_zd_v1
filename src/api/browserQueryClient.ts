@@ -9,7 +9,7 @@ import {
 
 import { showToast } from '~/components/ui/Toast/showToast';
 
-import { reportError } from '~/api/reportError';
+import { reportClientError } from '~/api/reportClientError';
 
 import { QUERY_DEFAULT_OPTIONS } from '~/config/query';
 
@@ -34,13 +34,13 @@ function makeBrowserQueryClient() {
 
     queryCache: new QueryCache({
       onError: (error, query) => {
-        if (query.meta?.errorToast) reportError(error);
+        if (query.meta?.errorToast) reportClientError(error);
       },
     }),
 
     mutationCache: new MutationCache({
       onError: (error, _variables, _onMutateResult, mutation) => {
-        if (mutation.meta?.errorToast) reportError(error);
+        if (mutation.meta?.errorToast) reportClientError(error);
       },
 
       onSuccess: async (
@@ -74,7 +74,7 @@ function makeBrowserQueryClient() {
           } catch (error) {
             // The mutation itself succeeded; a failed revalidation is worth
             // recording but must not surface as a failed action to the user.
-            reportError(error, { toast: false });
+            reportClientError(error, { toast: false });
           }
         }
       },

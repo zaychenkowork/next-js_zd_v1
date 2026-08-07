@@ -2,17 +2,23 @@ import { apiFetch } from '~/api/client';
 
 import {
   categoryListSchema,
+  type Product,
+  type ProductList,
   productListSchema,
   productSchema,
 } from '~/schemas/product';
-import type { ProductSort } from '~/schemas/productFilters';
 import {
+  type RefreshResponse,
   refreshResponseSchema,
   type SignInInput,
+  type SignInResponse,
   signInResponseSchema,
   type UpdateProfileInput,
+  type UserProfile,
   userProfileSchema,
 } from '~/schemas/user';
+
+import type { ProductSort } from '~/constants/products';
 
 /**
  * The single flat catalogue of endpoints. Methods are named
@@ -29,6 +35,11 @@ import {
  * Every method takes an optional `options` so the caller can add what only it
  * knows: `headers` for the session (from the DAL) and `next: { revalidate, tags
  * }` for the Data Cache. See docs/api-layer.md.
+ *
+ * Return types are annotated explicitly so each signature reads as the full
+ * contract — "this is what you pass, this is what you get" — without opening
+ * the schema. The types still come from `z.infer`, so an annotation that
+ * drifts from its schema is a compile error, not a lie.
  */
 export type ApiRequestOptions = Pick<
   RequestInit,
@@ -53,7 +64,7 @@ export const api = {
   productsGet: (
     { q, category, sort = 'newest', limit, skip }: ProductsQuery,
     options?: ApiRequestOptions,
-  ) => {
+  ): Promise<ProductList> => {
     /**
      * Three endpoints for one conceptual query, because this backend cannot
      * combine a text search with a category filter. A real API would take both
@@ -72,23 +83,23 @@ export const api = {
     });
   },
 
-  productGet: (id: number, options?: ApiRequestOptions) =>
+  productGet: (id: number, options?: ApiRequestOptions): Promise<Product> =>
     apiFetch(`/products/${id}`, { ...options, schema: productSchema }),
 
-  productCategoriesGet: (options?: ApiRequestOptions) =>
+  productCategoriesGet: (options?: ApiRequestOptions): Promise<string[]> =>
     apiFetch('/products/category-list', {
       ...options,
       schema: categoryListSchema,
     }),
 
-  profileGet: (options?: ApiRequestOptions) =>
+  profileGet: (options?: ApiRequestOptions): Promise<UserProfile> =>
     apiFetch('/auth/me', { ...options, schema: userProfileSchema }),
 
   profilePut: (
     id: number,
     data: UpdateProfileInput,
     options?: ApiRequestOptions,
-  ) =>
+  ): Promise<UserProfile> =>
     apiFetch(`/users/${id}`, {
       ...options,
       method: 'PUT',
@@ -96,7 +107,10 @@ export const api = {
       schema: userProfileSchema,
     }),
 
-  signInPost: (data: SignInInput, options?: ApiRequestOptions) =>
+  signInPost: (
+    data: SignInInput,
+    options?: ApiRequestOptions,
+  ): Promise<SignInResponse> =>
     apiFetch('/auth/login', {
       ...options,
       method: 'POST',
@@ -104,7 +118,10 @@ export const api = {
       schema: signInResponseSchema,
     }),
 
-  refreshPost: (refreshToken: string, options?: ApiRequestOptions) =>
+  refreshPost: (
+    refreshToken: string,
+    options?: ApiRequestOptions,
+  ): Promise<RefreshResponse> =>
     apiFetch('/auth/refresh', {
       ...options,
       method: 'POST',

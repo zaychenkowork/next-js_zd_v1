@@ -50,12 +50,21 @@ export type ApiFetchOptions<T> = Omit<RequestInit, 'body'> & {
    * three components deep as `Cannot read properties of undefined`.
    */
   schema?: ZodType<T>;
-  /** Serialised as JSON. Pass a `FormData`/`Blob` through `rawBody` instead. */
+  /*
+   * Serialised as JSON. Pass a `FormData`/`Blob` through `rawBody` instead.
+   */
   body?: unknown;
+  /*
+   * Serialised as JSON. Pass a `FormData`/`Blob` through `rawBody` instead.
+   */
   rawBody?: BodyInit;
-  /** `undefined`, `null` and `''` entries are dropped. */
+  /*
+   * `undefined`, `null` and `''` entries are dropped.
+   */
   searchParams?: Record<string, SearchParamValue>;
-  /** Set to `0` to disable. */
+  /*
+   * Set to `0` to disable.
+   */
   timeoutMs?: number;
 };
 

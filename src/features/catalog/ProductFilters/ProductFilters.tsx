@@ -9,11 +9,9 @@ import { TextField } from '~/components/ui/TextField/TextField';
 
 import { usePathname, useRouter } from '~/i18n/navigation';
 
-import {
-  PRODUCT_SORTS,
-  type ProductFilters as Filters,
-  type ProductSort,
-} from '~/schemas/productFilters';
+import type { ProductFilters as Filters } from '~/schemas/productFilters';
+
+import { PRODUCT_SORTS, type ProductSort } from '~/constants/products';
 
 import styles from './ProductFiltersStyles.module.css';
 

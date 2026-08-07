@@ -84,6 +84,16 @@ env: {
 Next injects `NEXT_PUBLIC_*` at build time; Vitest does not. Without this, every test
 that touches the API client fails at module evaluation.
 
+The SVGR transform is in there for the same reason — Vitest never loads
+`next.config.ts`, so without `vite-plugin-svgr` registered here an icon import
+resolves to a string and every test rendering an `Icon` fails with React being handed
+a data URI where it expected a component. Both configs read their options from
+`svgr.config.js` so they cannot drift.
+[`Icon.test.tsx`](../__tests__/components/ui/Icon/Icon.test.tsx) asserts the inlined
+`<svg>` explicitly: it is really a test of the build, and it is the one that tells you
+which of the three bundler configs you forgot. See
+[assets.md](./assets.md#how-the-svg-pipeline-is-wired).
+
 ## `renderWithProviders`
 
 [`__tests__/test-utils.tsx`](../__tests__/test-utils.tsx) mirrors

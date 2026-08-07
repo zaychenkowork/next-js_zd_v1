@@ -5,7 +5,7 @@ import {
 
 /**
  * Defaults shared by every QueryClient instance in the app (browser, SSR pass,
- * and the throwaway server-side prefetch client) — see src/api/queryClient.ts
+ * and the throwaway server-side prefetch client) — see src/api/serverQueryClient.ts
  * for why there are three.
  */
 export const QUERY_DEFAULT_OPTIONS: DefaultOptions = {

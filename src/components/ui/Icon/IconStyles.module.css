@@ -1,0 +1,15 @@
+/**
+ * There is almost nothing here on purpose. An icon's colour is whatever `color`
+ * the parent sets (or the `strokeColor`/`fillColor` props on `Icon`), because
+ * the glyphs are authored with `currentColor` — so dark mode needs no
+ * icon-specific rule at all.
+ *
+ * No `color` declaration here, deliberately: `Icon` passes `strokeColor` as
+ * the `color` presentation attribute, and *any* CSS rule — even `inherit` —
+ * outranks a presentation attribute and would silently disable the prop.
+ */
+.icon {
+  display: block;
+  /* Never let a flex parent squash a glyph into an ellipse. */
+  flex: none;
+}

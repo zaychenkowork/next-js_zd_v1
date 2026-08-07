@@ -7,7 +7,7 @@ import { Button } from '~/components/ui/Button/Button';
 
 import { signOutAction } from '~/server/actions/auth';
 
-import { reportActionError } from '~/api/reportError';
+import { reportActionError } from '~/api/reportClientError';
 
 /**
  * The action redirects, so there is no `onSuccess` to hook into — the navigation

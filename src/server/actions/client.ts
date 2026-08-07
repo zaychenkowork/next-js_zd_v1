@@ -28,7 +28,7 @@ import { IS_PRODUCTION } from '~/config/env';
  * ## `serverError` is a translation key, not a sentence
  *
  * `handleServerError` returns things like `'errors.unauthorized'`. The client
- * funnel (`reportError`) runs it through `t()`. Returning a localised string from
+ * funnel (`reportClientError`) runs it through `t()`. Returning a localised string from
  * the server instead would mean the server has to know the user's locale for
  * every error, and the same message could never be reused by a mobile client.
  *
