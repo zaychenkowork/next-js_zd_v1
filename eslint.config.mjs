@@ -190,6 +190,20 @@ export default tseslint.config(
             restrictedLayerImport('~/assets'),
             restrictedLayerImport('~/styles'),
           ],
+          patterns: [
+            {
+              /**
+               * `components/ui/Icon/types.ts` is the single place that imports a
+               * glyph; the override below exempts it. Everywhere else, an icon
+               * arrives as `Icons.Foo`. Without this the registry decays into a
+               * hundred imports scattered across features, and the catalogue
+               * story stops being the answer to "do we already have this icon?".
+               */
+              group: ['~/assets/icons/*'],
+              message:
+                'Import icons through ~/components/ui/Icon/Icon and the Icons enum, not the .svg file. Register new glyphs in components/ui/Icon/types.ts — see docs/assets.md.',
+            },
+          ],
         },
       ],
       'no-restricted-syntax': [
@@ -225,7 +239,27 @@ export default tseslint.config(
           message:
             'Compose class names with cn() from `classnames`, not string concatenation.',
         },
+        {
+          /**
+           * Hand-written `<svg>` in a component is how an icon set quietly
+           * becomes untranslatable to the design system: it does not go through
+           * SVGR, so it misses the `currentColor` rewrite, the shared sizing and
+           * the accessibility defaults in `components/ui/Icon`, and it is
+           * invisible to the Icon story that serves as the catalogue. Put the
+           * file in `src/assets/icons/` and register it instead — see
+           * docs/assets.md.
+           */
+          selector: "JSXOpeningElement[name.name='svg']",
+          message:
+            'Do not inline SVG markup. Add the file to src/assets/icons/ and render it through ~/components/ui/Icon/Icon.',
+        },
       ],
+      /**
+       * `eslint-config-next` ships this as a warning. docs/assets.md states the
+       * rule as "never a bare `<img>`", and a warning does not enforce a rule —
+       * it just makes the output noisier until someone stops reading it.
+       */
+      '@next/next/no-img-element': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
       'sonarjs/cognitive-complexity': 'off',
@@ -250,6 +284,16 @@ export default tseslint.config(
     ],
     rules: {
       'no-restricted-syntax': 'off',
+    },
+  },
+  {
+    /**
+     * The one file allowed to import a `.svg` — it *is* the icon registry. See
+     * docs/assets.md.
+     */
+    files: ['src/components/ui/Icon/types.ts'],
+    rules: {
+      'no-restricted-imports': 'off',
     },
   },
   {

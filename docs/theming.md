@@ -71,22 +71,26 @@ black, are in [assets.md](./assets.md#icons-svg-that-becomes-a-component).
 ### Why the switcher's icon is CSS
 
 ```css
-.moon {
+.button .moon {
   display: none;
 }
-:global([data-theme='dark']) .sun {
+:global([data-theme='dark']) .button .sun {
   display: none;
 }
-:global([data-theme='dark']) .moon {
+:global([data-theme='dark']) .button .moon {
   display: block;
 }
 ```
 
-The server cannot know the user's theme, so any JS-driven icon choice would render
-one glyph on the server and the other on the client — a hydration mismatch on every
-page. Letting CSS decide means the markup is identical on both sides. Code that needs
-the value in JavaScript uses `useTheme`; `theme` and `resolvedTheme` are unavailable
-until the component mounts.
+The obvious alternative is `resolvedTheme === 'dark' ? <Moon /> : <Sun />`, and it
+does not work. The theme lives in `localStorage`, so `useTheme()` returns
+`undefined` on the server **and** on the first client render — that is next-themes'
+documented behaviour, not a bug. Branching on it either renders one glyph on the
+server and the other on the client (a hydration mismatch on every page) or needs a
+`mounted` guard, which ships an empty button in the HTML and pops the icon in after
+hydration. Both glyphs in the markup and CSS choosing between them costs nothing and
+has neither problem. Code that genuinely needs the value in JavaScript — like the
+`onClick` here — reads it after mount, where it is defined.
 
 ## CSS Modules, and the naming rule
 

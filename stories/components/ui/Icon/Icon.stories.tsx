@@ -9,6 +9,19 @@ import { Icons } from '~/components/ui/Icon/types';
  * "does this app already have a check mark?" is a Storybook search rather than
  * an `ls`.
  */
+/**
+ * Every member of the enum, derived rather than listed — a numeric TS enum keeps
+ * a reverse mapping at runtime (`Icons[0] === 'Check'`), so both the picker and
+ * the catalogue below pick up a new icon without this file being touched.
+ */
+const ICON_TYPES = Object.values(Icons).filter(
+  (value): value is Icons => typeof value === 'number',
+);
+
+const ICON_LABELS = Object.fromEntries(
+  ICON_TYPES.map((type) => [type, Icons[type]]),
+);
+
 const meta = {
   title: 'UI/Icon',
   component: Icon,
@@ -16,16 +29,8 @@ const meta = {
   argTypes: {
     type: {
       control: 'select',
-      options: Object.values(Icons).filter(
-        (value) => typeof value === 'number',
-      ),
-      /** A numeric enum has no runtime names, so the labels are spelled out. */
-      mapping: Icons,
-      labels: {
-        [Icons.Check]: 'Check',
-        [Icons.Chevron]: 'Chevron',
-        [Icons.Search]: 'Search',
-      },
+      options: ICON_TYPES,
+      labels: ICON_LABELS,
     },
     size: { control: { type: 'range', min: 12, max: 64, step: 2 } },
     strokeColor: { control: 'color' },
@@ -88,11 +93,28 @@ export const CustomColors: Story = {
 export const AllIcons: Story = {
   parameters: { controls: { disable: true } },
   render: () => (
-    <div style={{ display: 'flex', gap: '2rem', color: 'var(--color-text)' }}>
-      {(
-        Object.values(Icons).filter((v) => typeof v === 'number') as Icons[]
-      ).map((type) => (
-        <Icon key={type} type={type} size={32} />
+    <div
+      style={{
+        display: 'flex',
+        gap: '2rem',
+        flexWrap: 'wrap',
+        color: 'var(--color-text)',
+      }}
+    >
+      {ICON_TYPES.map((type) => (
+        <figure
+          key={type}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: '0.5rem',
+            margin: 0,
+          }}
+        >
+          <Icon type={type} size={32} />
+          <figcaption style={{ fontSize: '0.75rem' }}>{Icons[type]}</figcaption>
+        </figure>
       ))}
     </div>
   ),

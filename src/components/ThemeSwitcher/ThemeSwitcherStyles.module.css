@@ -19,15 +19,18 @@
 /**
  * Icon visibility is a pure CSS consequence of `data-theme` on <html>, so the
  * markup is identical on the server and the client. See ThemeSwitcher.tsx.
+ *
+ * Qualified with `.button` because `Icon` sets `display: block` via its own
+ * class on the same element; a bare `.moon` would tie on specificity.
  */
-.moon {
+.button .moon {
   display: none;
 }
 
-:global([data-theme='dark']) .sun {
+:global([data-theme='dark']) .button .sun {
   display: none;
 }
 
-:global([data-theme='dark']) .moon {
+:global([data-theme='dark']) .button .moon {
   display: block;
 }

@@ -2,7 +2,9 @@ import type { FC, SVGProps } from 'react';
 
 import Check from '~/assets/icons/check.svg';
 import Chevron from '~/assets/icons/chevron.svg';
+import Moon from '~/assets/icons/moon.svg';
 import Search from '~/assets/icons/search.svg';
+import Sun from '~/assets/icons/sun.svg';
 
 /**
  * What SVGR produces for a file in `src/assets/icons/` — see
@@ -23,7 +25,9 @@ type SVGComponent = FC<SVGProps<SVGSVGElement> & { title?: string }>;
 export enum Icons {
   Check,
   Chevron,
+  Moon,
   Search,
+  Sun,
 }
 
 /**
@@ -34,5 +38,7 @@ export enum Icons {
 export const IconsMap: Record<Icons, SVGComponent> = {
   [Icons.Check]: Check,
   [Icons.Chevron]: Chevron,
+  [Icons.Moon]: Moon,
   [Icons.Search]: Search,
+  [Icons.Sun]: Sun,
 };

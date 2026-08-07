@@ -66,7 +66,7 @@ export const svgrOptions = {
    * Figma exports icons with a hard-coded near-black fill. Rewriting it to
    * `currentColor` at build time is what lets `color` on the parent — including
    * a theme token — drive the icon, without editing exported files by hand. An
-   * icon authored with `currentColor` already (like the three in this template)
+   * icon authored with `currentColor` already (as every icon here is)
    * is unaffected.
    */
   // replaceAttrValues: { '#0B0B0C': 'currentColor' },
