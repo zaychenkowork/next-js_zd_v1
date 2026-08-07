@@ -38,7 +38,7 @@ touches user data — a `'use server'` export is a public HTTP endpoint.
 
 **`type`, not `interface`** (except declaration merging). Infer types from zod schemas.
 
-**English everywhere** except `messages/*.json`.
+**English everywhere** except `src/i18n/messages/*.json`.
 
 ## Reading data
 

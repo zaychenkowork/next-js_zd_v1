@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import { CartLines } from '~/features/cart/CartLines/CartLines';
 
@@ -35,10 +35,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CartPage({ params }: CartPageProps) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default async function CartPage() {
   const [cart, t] = await Promise.all([getCart(), getTranslations('cart')]);
 
   return (

@@ -12,7 +12,7 @@ import { toastManager } from '~/components/ui/Toast/toastManager';
 import { DEFAULT_LOCALE } from '~/constants/locales';
 import { STORAGE_KEYS } from '~/constants/storageKeys';
 
-import messages from '../messages/uk.json';
+import messages from '../src/i18n/messages/uk.json';
 
 /**
  * The provider stack under test mirrors src/app/providers.tsx, minus the devtools.
@@ -21,9 +21,9 @@ import messages from '../messages/uk.json';
  * retries, a test asserting an error state waits for three failed attempts and
  * usually times out instead of failing with a useful message.
  *
- * Messages come from the real `messages/uk.json` rather than a fixture, so a test
- * fails when a key is renamed in one locale and not the others — which is the
- * failure mode a mocked `t()` hides.
+ * Messages come from the real `src/i18n/messages/uk.json` rather than a fixture,
+ * so a test fails when a key is renamed in one locale and not the others — which
+ * is the failure mode a mocked `t()` hides.
  */
 function createTestQueryClient() {
   return new QueryClient({

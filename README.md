@@ -85,13 +85,14 @@ src/
 ├── api/                 client.ts (transport) · api.ts (endpoints) · queries/
 ├── store/               Zustand — client UI state only
 ├── schemas/             zod schemas + inferred types
-├── i18n/ config/ constants/ types/ styles/
+├── i18n/                routing · request · navigation · messages/
+│   └── messages/        uk.json · en.json · ar.json
+├── config/ constants/ types/ styles/
 ├── proxy.ts             locale routing only, no authorization
 └── instrumentation*.ts  Sentry
 __tests__/               mirrors src/ 1:1  (Vitest + RTL)
 stories/                 mirrors src/ 1:1  (Storybook)
 e2e/                     Playwright — separate on purpose
-messages/                uk.json · en.json · ar.json
 docs/
 ```
 

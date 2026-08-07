@@ -49,8 +49,8 @@ The decorator mirrors `src/app/providers.tsx`: `NextIntlClientProvider` →
 plus a `#app-root` div with `isolation: isolate` because Base UI needs an isolated
 stacking context for portals and stories portal too.
 
-Messages come from the real `messages/*.json`, so a story showing a raw key is a
-missing translation, not a story bug.
+Messages come from the real `src/i18n/messages/*.json`, so a story showing a raw
+key is a missing translation, not a story bug.
 
 One structural detail: the providers live in a real `AppProviders` **component**, not
 inline in the decorator. A `Decorator` is a plain function as far as React is

@@ -93,9 +93,9 @@ that touches the API client fails at module evaluation.
 state waits out three failed attempts and usually times out instead of failing with a
 useful message.
 
-**Real messages, from `messages/uk.json`.** A mocked `t()` hides the failure where a
-key is renamed in one locale and not the others. Using the real dictionary means the
-test catches it.
+**Real messages, from `src/i18n/messages/uk.json`.** A mocked `t()` hides the failure
+where a key is renamed in one locale and not the others. Using the real dictionary
+means the test catches it.
 
 ## Test naming
 

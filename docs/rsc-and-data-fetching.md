@@ -31,10 +31,7 @@ cannot import a Server Component, but it _can_ receive server-rendered elements 
 [`src/app/[locale]/page.tsx`](../src/app/[locale]/page.tsx)
 
 ```tsx
-export default async function HomePage({ params }) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default async function HomePage() {
   const [t, featured] = await Promise.all([
     getTranslations(),
     getProductList({ q: '', category: '', sort: 'newest', page: 1 }),

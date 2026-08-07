@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 import { ProductFiltersPanel } from '~/features/catalog/ProductFilters/ProductFilters';
@@ -59,12 +59,8 @@ export async function generateMetadata({
 }
 
 export default async function ProductsPage({
-  params,
   searchParams,
 }: ProductsPageProps) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
   const t = await getTranslations('products');
 
   // `page` is dropped on purpose: the infinite query owns paging through

@@ -7,7 +7,7 @@ rather than a preference. If a rule has no reason attached, it does not belong.
 
 **Everything in the repository is in English** — code, comments, commit messages,
 docs, branch names, PR descriptions. The only non-English strings are the contents of
-`messages/*.json`.
+`src/i18n/messages/*.json`.
 
 ## TypeScript
 

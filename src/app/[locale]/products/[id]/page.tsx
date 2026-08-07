@@ -1,11 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import {
-  getFormatter,
-  getTranslations,
-  setRequestLocale,
-} from 'next-intl/server';
+import { getFormatter, getTranslations } from 'next-intl/server';
 
 import { AddToCartButton } from '~/features/catalog/AddToCartButton/AddToCartButton';
 
@@ -110,8 +106,7 @@ export async function generateMetadata({
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { locale, id } = await params;
-  setRequestLocale(locale);
+  const { id } = await params;
 
   const [product, t, format] = await Promise.all([
     loadProduct(id),

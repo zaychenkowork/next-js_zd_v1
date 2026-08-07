@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import { Providers } from '~/app/providers';
 
@@ -26,9 +26,9 @@ const inter = Inter({
 });
 
 /**
- * Pre-renders every locale at build time. Combined with `setRequestLocale`
- * below this keeps pages statically rendered instead of falling back to
- * dynamic rendering — next-intl requires the explicit call, it cannot infer it.
+ * Declares the known values of the `[locale]` root segment. Locale resolution
+ * itself happens in i18n/request.ts via `next/root-params`; this list is what
+ * would let the routes prerender if they ever stop reading cookies.
  */
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -70,7 +70,6 @@ export default async function LocaleLayout({
   // `params` is untrusted input — a request for /xx/ must 404, not render with
   // a broken locale.
   if (!hasLocale(routing.locales, locale)) notFound();
-  setRequestLocale(locale);
 
   const direction = LOCALE_DIRECTIONS[locale as Locale];
 

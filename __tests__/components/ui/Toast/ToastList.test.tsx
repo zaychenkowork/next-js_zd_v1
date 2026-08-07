@@ -13,8 +13,8 @@ import { renderWithProviders } from '../../../test-utils';
  * an i18n **key**. Translation happens later, in `ToastList`, which is the only
  * one of the two that sits inside a locale provider.
  *
- * Messages come from `messages/uk.json` via test-utils, so a renamed key fails
- * here instead of shipping.
+ * Messages come from `src/i18n/messages/uk.json` via test-utils, so a renamed
+ * key fails here instead of shipping.
  */
 describe('ToastList', () => {
   /**

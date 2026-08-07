@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import { SignOutButton } from '~/features/auth/SignOutButton/SignOutButton';
 import { ProfileForm } from '~/features/profile/ProfileForm/ProfileForm';
@@ -38,10 +38,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProfilePage({ params }: ProfilePageProps) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-
+export default async function ProfilePage() {
   const [profile, t] = await Promise.all([
     getProfile(),
     getTranslations('profile'),

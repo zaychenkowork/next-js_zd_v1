@@ -6,7 +6,7 @@ import { ThemeSwitcher } from '~/components/ThemeSwitcher/ThemeSwitcher';
 
 import { STORAGE_KEYS } from '~/constants/storageKeys';
 
-import messages from '../../../messages/uk.json';
+import messages from '../../../src/i18n/messages/uk.json';
 import { renderWithProviders } from '../../test-utils';
 
 describe('ThemeSwitcher', () => {

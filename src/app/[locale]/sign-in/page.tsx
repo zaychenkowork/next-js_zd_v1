@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 
 import { SignInForm } from '~/features/auth/SignInForm/SignInForm';
 
@@ -27,7 +27,6 @@ export async function generateMetadata({
 
 export default async function SignInPage({ params }: SignInPageProps) {
   const { locale } = await params;
-  setRequestLocale(locale);
 
   /**
    * `getOptionalProfile()` — the "might be signed in" DAL entry point — rather

@@ -18,9 +18,9 @@ import {
 import { STORAGE_KEYS } from '~/constants/storageKeys';
 import { type Theme, THEMES } from '~/constants/theme';
 
-import arMessages from '../messages/ar.json';
-import enMessages from '../messages/en.json';
-import ukMessages from '../messages/uk.json';
+import arMessages from '../src/i18n/messages/ar.json';
+import enMessages from '../src/i18n/messages/en.json';
+import ukMessages from '../src/i18n/messages/uk.json';
 
 import '~/styles/globals.css';
 import toastStyles from '~/components/ui/Toast/ToastStyles.module.css';
